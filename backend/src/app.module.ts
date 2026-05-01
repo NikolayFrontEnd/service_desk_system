@@ -5,7 +5,7 @@ import { TestingModule } from './testing/testing.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [TestingModule, PrismaModule],
+  imports: [PrismaModule, TestingModule],
   controllers: [AppController],
   providers: [AppService],
 })

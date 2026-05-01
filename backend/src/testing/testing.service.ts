@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTestingDto } from './dto/create-testing.dto';
 import { UpdateTestingDto } from './dto/update-testing.dto';
@@ -9,9 +13,11 @@ export class TestingService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createTestingDto: CreateTestingDto): Promise<Testing> {
+    const name = this.validateName(createTestingDto.name);
+
     return this.prisma.testing.create({
       data: {
-        name: createTestingDto.name,
+        name,
       },
     });
   }
@@ -32,13 +38,22 @@ export class TestingService {
     });
 
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found`);
+      throw new NotFoundException(`Testing item with id ${id} not found`);
     }
 
     return user;
   }
 
-  async update(id: number, updateTestingDto: UpdateTestingDto): Promise<Testing> {
+  async update(
+    id: number,
+    updateTestingDto: UpdateTestingDto,
+  ): Promise<Testing> {
+    if (updateTestingDto.name === undefined) {
+      throw new BadRequestException('No fields to update');
+    }
+
+    const name = this.validateName(updateTestingDto.name);
+
     await this.findOne(id);
 
     return this.prisma.testing.update({
@@ -46,7 +61,7 @@ export class TestingService {
         id,
       },
       data: {
-        name: updateTestingDto.name,
+        name,
       },
     });
   }
@@ -61,7 +76,15 @@ export class TestingService {
     });
 
     return {
-      message: `User with id ${id} was deleted`,
+      message: `Testing item with id ${id} was deleted`,
     };
+  }
+
+  private validateName(name: unknown): string {
+    if (typeof name !== 'string' || name.trim().length === 0) {
+      throw new BadRequestException('Name must be a non-empty string');
+    }
+
+    return name.trim();
   }
 }
