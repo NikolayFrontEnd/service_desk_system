@@ -1,8 +1,6 @@
-import 'dotenv/config';
-
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 @Injectable()
 export class PrismaService
@@ -13,19 +11,21 @@ export class PrismaService
     const databaseUrl = process.env.DATABASE_URL;
 
     if (!databaseUrl) {
-      throw new Error('DATABASE_URL is not set');
+      throw new Error('DATABASE_URL is not defined');
     }
 
-    super({
-      adapter: new PrismaPg(databaseUrl),
+    const adapter = new PrismaPg({
+      connectionString: databaseUrl,
     });
+
+    super({ adapter });
   }
 
-  async onModuleInit(): Promise<void> {
+  async onModuleInit() {
     await this.$connect();
   }
 
-  async onModuleDestroy(): Promise<void> {
+  async onModuleDestroy() {
     await this.$disconnect();
   }
 }
