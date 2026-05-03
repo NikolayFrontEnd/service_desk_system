@@ -14,8 +14,8 @@ const [data, setData] = useState<User[]>([]);
       })
       .catch((error) => {
         console.error('Error:', error);
-      });
-  }, []);
+      })
+  }, [])
 
   return (
     <>
