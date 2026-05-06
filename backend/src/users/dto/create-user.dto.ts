@@ -1,10 +1,10 @@
 export type UserRole = 'EMPLOYEE' | 'SUPPORT' | 'TECHNICIAN';
 
 export class CreateUserDto {
-  name: string;
-  email: string;
-  password: string;
-  role: UserRole;
+  name!: string;
+  email!: string;
+  password!: string;
+  role!: UserRole;
 
   employee?: {
     department: string;
