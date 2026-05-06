@@ -6,6 +6,48 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id           Int     @id @default(autoincrement())
+  name         String
+  email        String  @unique
+  passwordHash String  @map("passwordHash")
+  role         String
+
+  employee     Employee?
+  technician   Technician?
+
+  @@map("users")
+}
+
+model Employee {
+  id         Int    @id @default(autoincrement())
+  userId     Int    @unique @map("userId")
+  department String?
+  floor      Int?
+  room       Int?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("employees")
+}
+
+model Technician {
+  id                  Int     @id @default(autoincrement())
+  userId              Int     @unique @map("userId")
+  specializations     String?
+  skillLevel          Int?    @map("skillLevel")
+  experienceYears     Int?    @map("experienceYears")
+  currentStatus       String? @map("currentStatus")
+  currentLoadMinutes  Int?    @map("currentLoadMinutes")
+  activeTasksCount    Int?    @map("activeTasksCount")
+  maxDailyLoadMinutes Int?    @map("maxDailyLoadMinutes")
+  currentDepartment   String? @map("currentDepartment")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("technicians")
+}
+
 model Testing {
   id   Int    @id @default(autoincrement())
   name String @map("Name")
