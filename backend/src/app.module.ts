@@ -6,9 +6,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { InitialRepairRequestsModule } from './initial-repair-requests/initial-repair-requests.module';
 
 @Module({
-  imports: [PrismaModule, TestingModule, AuthModule, UsersModule, TicketsModule],
+  imports: [PrismaModule, TestingModule, AuthModule, UsersModule, TicketsModule, InitialRepairRequestsModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -54,3 +54,12 @@ model Testing {
 
   @@map("test")
 }
+model InitialRepairRequest {
+  id         Int    @id @default(autoincrement())
+  department String
+  floor      Int
+  room       Int
+  workImpact String @map("workImpact")
+
+  @@map("initial_repair_requests")
+}
