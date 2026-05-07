@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateInitialRepairRequestDto } from './dto/create-initial-repair-request.dto';
-import { UpdateInitialRepairRequestDto } from './dto/update-initial-repair-request.dto';
 
 @Injectable()
 export class InitialRepairRequestsService {
-  create(createInitialRepairRequestDto: CreateInitialRepairRequestDto) {
-    return 'This action adds a new initialRepairRequest';
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all initialRepairRequests`;
-  }
+  async createInitialRepairRequest(
+    createInitialRepairRequestDto: CreateInitialRepairRequestDto,
+  ) {
+    const allowedWorkImpacts = [
+      'CANNOT_WORK',
+      'PARTIALLY_CAN_WORK',
+      'CAN_WAIT',
+      'NOT_URGENT',
+    ];
 
-  findOne(id: number) {
-    return `This action returns a #${id} initialRepairRequest`;
-  }
+    if (!allowedWorkImpacts.includes(createInitialRepairRequestDto.workImpact)) {
+      throw new BadRequestException('Invalid work impact');
+    }
 
-  update(id: number, updateInitialRepairRequestDto: UpdateInitialRepairRequestDto) {
-    return `This action updates a #${id} initialRepairRequest`;
-  }
+    const initialRepairRequest =
+      await this.prisma.InitialRepairRequest.create({
+        data: {
+          department: createInitialRepairRequestDto.department,
+          floor: createInitialRepairRequestDto.floor,
+          room: createInitialRepairRequestDto.room,
+          workImpact: createInitialRepairRequestDto.workImpact,
+        },
+      });
 
-  remove(id: number) {
-    return `This action removes a #${id} initialRepairRequest`;
+    return {
+      message: 'Initial repair request created successfully',
+      request: initialRepairRequest,
+    };
   }
 }

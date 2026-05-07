@@ -1,0 +1,326 @@
+[
+  {
+    "id": 1,
+    "code": "NO_POWER",
+    "title": "Компьютер не включается",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 90,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 2,
+    "code": "POWER_SUPPLY_FAILURE",
+    "title": "Неисправность блока питания",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 120,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 3,
+    "code": "POWER_SOCKET_FAILURE",
+    "title": "Неисправность разъема питания",
+    "category": "HARDWARE",
+    "complexity": 4,
+    "averageRepairTimeMinutes": 240,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 4,
+    "code": "BATTERY_FAILURE",
+    "title": "Неисправность батареи ноутбука",
+    "category": "HARDWARE",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 5,
+    "code": "STORAGE_FAILURE",
+    "title": "Неисправность HDD/SSD",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 180,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 6,
+    "code": "DATA_TRANSFER_REQUIRED",
+    "title": "Замена диска с переносом данных",
+    "category": "HARDWARE",
+    "complexity": 4,
+    "averageRepairTimeMinutes": 240,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 7,
+    "code": "RAM_FAILURE",
+    "title": "Ошибка или неисправность оперативной памяти",
+    "category": "HARDWARE",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 8,
+    "code": "COOLING_OVERHEAT",
+    "title": "Перегрев, шум вентилятора, загрязнение охлаждения",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 180,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 9,
+    "code": "FAN_FAILURE",
+    "title": "Неисправность вентилятора",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 120,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 10,
+    "code": "DISPLAY_FAILURE",
+    "title": "Нет изображения, повреждение экрана",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 120,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 11,
+    "code": "GPU_ARTIFACTS",
+    "title": "Артефакты изображения, проблема видеочипа/видеокарты",
+    "category": "HARDWARE",
+    "complexity": 4,
+    "averageRepairTimeMinutes": 240,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 12,
+    "code": "MOTHERBOARD_FAILURE",
+    "title": "Неисправность материнской платы",
+    "category": "HARDWARE",
+    "complexity": 5,
+    "averageRepairTimeMinutes": 360,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 13,
+    "code": "CPU_FAILURE",
+    "title": "Проблема процессора или сокета",
+    "category": "HARDWARE",
+    "complexity": 5,
+    "averageRepairTimeMinutes": 300,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 14,
+    "code": "PORTS_FAILURE",
+    "title": "Не работают USB, audio, HDMI или другие порты",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 120,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 15,
+    "code": "CASE_OR_HINGE_DAMAGE",
+    "title": "Повреждение корпуса или петель ноутбука",
+    "category": "HARDWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 180,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 16,
+    "code": "LIQUID_DAMAGE",
+    "title": "Залитие жидкостью",
+    "category": "HARDWARE",
+    "complexity": 5,
+    "averageRepairTimeMinutes": 480,
+    "recommendedSpecialization": "HARDWARE"
+  },
+  {
+    "id": 17,
+    "code": "OS_BOOT_FAILURE",
+    "title": "Операционная система не загружается",
+    "category": "SOFTWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 120,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 18,
+    "code": "OS_REINSTALL",
+    "title": "Переустановка операционной системы",
+    "category": "SOFTWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 240,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 19,
+    "code": "SYSTEM_FILE_CORRUPTION",
+    "title": "Повреждение системных файлов",
+    "category": "SOFTWARE",
+    "complexity": 4,
+    "averageRepairTimeMinutes": 180,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 20,
+    "code": "BSOD_ERROR",
+    "title": "Синий экран / критическая ошибка Windows",
+    "category": "SOFTWARE",
+    "complexity": 4,
+    "averageRepairTimeMinutes": 180,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 21,
+    "code": "DRIVER_CONFLICT",
+    "title": "Конфликт или отсутствие драйверов",
+    "category": "SOFTWARE",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 22,
+    "code": "UPDATE_FAILURE",
+    "title": "Сбой обновления Windows или ПО",
+    "category": "SOFTWARE",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 90,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 23,
+    "code": "MALWARE_INFECTION",
+    "title": "Вирусы, malware, подозрительная активность",
+    "category": "SOFTWARE",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 120,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 24,
+    "code": "PERFORMANCE_SLOW",
+    "title": "Компьютер сильно тормозит",
+    "category": "SOFTWARE",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 90,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 25,
+    "code": "SOFTWARE_INSTALLATION",
+    "title": "Установка и настройка программного обеспечения",
+    "category": "SOFTWARE",
+    "complexity": 1,
+    "averageRepairTimeMinutes": 45,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 26,
+    "code": "ACCOUNT_ACCESS_PROBLEM",
+    "title": "Проблема входа в учетную запись / пароль / профиль",
+    "category": "SOFTWARE",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "SOFTWARE"
+  },
+  {
+    "id": 27,
+    "code": "WIFI_CONNECTION_ISSUE",
+    "title": "Не работает Wi-Fi",
+    "category": "NETWORK",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "NETWORK"
+  },
+  {
+    "id": 28,
+    "code": "ETHERNET_CONNECTION_ISSUE",
+    "title": "Не работает проводная сеть",
+    "category": "NETWORK",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "NETWORK"
+  },
+  {
+    "id": 29,
+    "code": "IP_DNS_CONFIGURATION",
+    "title": "Ошибка IP/DNS/сетевых настроек",
+    "category": "NETWORK",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 75,
+    "recommendedSpecialization": "NETWORK"
+  },
+  {
+    "id": 30,
+    "code": "LOCAL_NETWORK_ACCESS",
+    "title": "Нет доступа к сетевым папкам или внутренним ресурсам",
+    "category": "NETWORK",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 90,
+    "recommendedSpecialization": "NETWORK"
+  },
+  {
+    "id": 31,
+    "code": "VPN_CONNECTION_ISSUE",
+    "title": "Проблема подключения к VPN",
+    "category": "NETWORK",
+    "complexity": 3,
+    "averageRepairTimeMinutes": 90,
+    "recommendedSpecialization": "NETWORK"
+  },
+  {
+    "id": 32,
+    "code": "PRINTER_CONNECTION_ISSUE",
+    "title": "Принтер не подключается или не печатает",
+    "category": "PERIPHERAL",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "PERIPHERAL"
+  },
+  {
+    "id": 33,
+    "code": "SCANNER_ISSUE",
+    "title": "Не работает сканер",
+    "category": "PERIPHERAL",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "PERIPHERAL"
+  },
+  {
+    "id": 34,
+    "code": "KEYBOARD_FAILURE",
+    "title": "Не работает клавиатура",
+    "category": "PERIPHERAL",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 90,
+    "recommendedSpecialization": "PERIPHERAL"
+  },
+  {
+    "id": 35,
+    "code": "MOUSE_OR_TOUCHPAD_FAILURE",
+    "title": "Не работает мышь или тачпад",
+    "category": "PERIPHERAL",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "PERIPHERAL"
+  },
+  {
+    "id": 36,
+    "code": "EXTERNAL_DEVICE_ISSUE",
+    "title": "Не определяется внешнее устройство",
+    "category": "PERIPHERAL",
+    "complexity": 2,
+    "averageRepairTimeMinutes": 60,
+    "recommendedSpecialization": "PERIPHERAL"
+  }
+]
