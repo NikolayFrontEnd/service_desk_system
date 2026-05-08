@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { AssignedRepairTasksService } from './assigned-repair-tasks.service';
 import { CreateAssignedRepairTaskDto } from './dto/create-assigned-repair-task.dto';
 
@@ -15,5 +15,10 @@ export class AssignedRepairTasksController {
     return this.assignedRepairTasksService.createAssignedRepairTask(
       createAssignedRepairTaskDto,
     );
+  }
+
+  @Patch(':id/start')
+  startRepairTask(@Param('id', ParseIntPipe) id: number) {
+    return this.assignedRepairTasksService.startRepairTask(id);
   }
 }
