@@ -397,4 +397,26 @@ export class AssignedRepairTasksService {
     task: updatedTask,
   };
 }
+async finishRepairTask(taskId: number) {
+  const task = await this.prisma.assignedRepairTask.findUnique({
+    where: {
+      id: taskId,
+    },
+  });
+
+  if (!task) {
+    throw new BadRequestException('Assigned repair task was not found');
+  }
+
+  await this.prisma.assignedRepairTask.delete({
+    where: {
+      id: taskId,
+    },
+  });
+
+  return {
+    message: 'Repair task was finished and deleted successfully',
+    deletedTaskId: taskId,
+  };
+}
 }
