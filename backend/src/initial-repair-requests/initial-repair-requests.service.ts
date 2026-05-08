@@ -21,7 +21,7 @@ export class InitialRepairRequestsService {
     }
 
     const initialRepairRequest =
-      await this.prisma.InitialRepairRequest.create({
+      await this.prisma.initialRepairRequest.create({
         data: {
           department: createInitialRepairRequestDto.department,
           floor: createInitialRepairRequestDto.floor,

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TestingModule } from './testing/testing.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -10,7 +9,7 @@ import { InitialRepairRequestsModule } from './initial-repair-requests/initial-r
 import { AssignedRepairTasksModule } from './assigned-repair-tasks/assigned-repair-tasks.module';
 
 @Module({
-  imports: [PrismaModule, TestingModule, AuthModule, UsersModule, TicketsModule, InitialRepairRequestsModule, AssignedRepairTasksModule],
+  imports: [PrismaModule, AuthModule, UsersModule, TicketsModule, InitialRepairRequestsModule, AssignedRepairTasksModule],
   controllers: [AppController],
   providers: [AppService],
 })
