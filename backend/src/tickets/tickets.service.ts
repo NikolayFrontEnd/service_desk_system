@@ -5,6 +5,8 @@ import { UpdateTicketDto } from './dto/update-ticket.dto';
 @Injectable()
 export class TicketsService {
   create(createTicketDto: CreateTicketDto) {
+    void createTicketDto;
+
     return 'This action adds a new ticket';
   }
 
@@ -17,6 +19,8 @@ export class TicketsService {
   }
 
   update(id: number, updateTicketDto: UpdateTicketDto) {
+    void updateTicketDto;
+
     return `This action updates a #${id} ticket`;
   }
 

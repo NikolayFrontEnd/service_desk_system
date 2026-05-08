@@ -8,10 +8,19 @@ describe('InitialRepairRequestsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [InitialRepairRequestsController],
-      providers: [InitialRepairRequestsService],
+      providers: [
+        {
+          provide: InitialRepairRequestsService,
+          useValue: {
+            createInitialRepairRequest: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
-    controller = module.get<InitialRepairRequestsController>(InitialRepairRequestsController);
+    controller = module.get<InitialRepairRequestsController>(
+      InitialRepairRequestsController,
+    );
   });
 
   it('should be defined', () => {

@@ -14,7 +14,7 @@ export class UsersService {
       throw new BadRequestException('Invalid user role');
     }
 
-    const existingUser = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.user.findFirst({
       where: {
         email: createUserDto.email,
       },
@@ -85,6 +85,4 @@ export class UsersService {
       user: result,
     };
   }
-
-  
 }

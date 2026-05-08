@@ -1,4 +1,4 @@
 export class CreateAssignedRepairTaskDto {
-      originalRequestId!: number;
+  originalRequestId!: number;
   faultTitle!: string;
 }

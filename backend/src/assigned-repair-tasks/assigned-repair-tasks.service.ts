@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import type { Technician } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateAssignedRepairTaskDto } from './dto/create-assigned-repair-task.dto';
 import * as fs from 'fs';
@@ -52,15 +53,17 @@ export class AssignedRepairTasksService {
     const bestTechnician = this.findBestTechnician(
       technicians,
       fault,
-      initialRequest.department,
-      initialRequest.workImpact,
+      initialRequest.department ?? '',
+      initialRequest.workImpact ?? '',
     );
 
     if (!bestTechnician) {
       throw new BadRequestException('No suitable technician was found');
     }
 
-    const priority = this.getPriorityFromWorkImpact(initialRequest.workImpact);
+    const priority = this.getPriorityFromWorkImpact(
+      initialRequest.workImpact ?? '',
+    );
 
     const createdAt = Math.floor(Date.now() / 1000);
 
@@ -89,9 +92,9 @@ export class AssignedRepairTasksService {
         },
         data: {
           currentLoadMinutes:
-            bestTechnician.currentLoadMinutes +
+            (bestTechnician.currentLoadMinutes ?? 0) +
             fault.averageRepairTimeMinutes,
-          activeTasksCount: bestTechnician.activeTasksCount + 1,
+          activeTasksCount: (bestTechnician.activeTasksCount ?? 0) + 1,
         },
       });
 
@@ -129,7 +132,7 @@ export class AssignedRepairTasksService {
 
     const file = fs.readFileSync(filePath, 'utf-8');
 
-    return JSON.parse(file);
+    return JSON.parse(file) as FaultCatalogItem[];
   }
 
   private getPriorityFromWorkImpact(workImpact: string): string {
@@ -153,12 +156,12 @@ export class AssignedRepairTasksService {
   }
 
   private findBestTechnician(
-    technicians: any[],
+    technicians: Technician[],
     fault: FaultCatalogItem,
     department: string,
     workImpact: string,
-  ) {
-    let bestTechnician = null;
+  ): Technician | null {
+    let bestTechnician: Technician | null = null;
     let bestScore = -999;
 
     for (const technician of technicians) {
@@ -179,41 +182,41 @@ export class AssignedRepairTasksService {
   }
 
   private calculateTechnicianScore(
-    technician: any,
+    technician: Technician,
     fault: FaultCatalogItem,
     department: string,
     workImpact: string,
   ): number {
     const S = this.getSpecializationScore(
-      technician.specializations,
+      technician.specializations ?? '',
       fault.recommendedSpecialization,
     );
 
     const L = this.getLoadScore(
-      technician.currentLoadMinutes,
-      technician.maxDailyLoadMinutes,
+      technician.currentLoadMinutes ?? 0,
+      technician.maxDailyLoadMinutes ?? 0,
     );
 
     const T = this.getTimeScore(
-      technician.currentLoadMinutes,
-      technician.maxDailyLoadMinutes,
+      technician.currentLoadMinutes ?? 0,
+      technician.maxDailyLoadMinutes ?? 0,
       fault.averageRepairTimeMinutes,
     );
 
     const D = this.getDepartmentScore(
-      technician.currentDepartment,
+      technician.currentDepartment ?? '',
       department,
     );
 
     const E = this.getExperienceScore(
-      technician.skillLevel,
+      technician.skillLevel ?? 0,
       fault.complexity,
     );
 
     const R = this.getRiskScore(
       workImpact,
-      technician.currentLoadMinutes,
-      technician.maxDailyLoadMinutes,
+      technician.currentLoadMinutes ?? 0,
+      technician.maxDailyLoadMinutes ?? 0,
     );
 
     const P = this.getPenaltyScore(technician, fault);
@@ -316,20 +319,26 @@ export class AssignedRepairTasksService {
     return 0.5;
   }
 
-  private getPenaltyScore(technician: any, fault: FaultCatalogItem): number {
+  private getPenaltyScore(
+    technician: Technician,
+    fault: FaultCatalogItem,
+  ): number {
     let penalty = 0;
 
     if (technician.currentStatus === 'UNAVAILABLE') {
       penalty += 10;
     }
 
-    if (technician.currentLoadMinutes >= technician.maxDailyLoadMinutes) {
+    if (
+      (technician.currentLoadMinutes ?? 0) >=
+      (technician.maxDailyLoadMinutes ?? 0)
+    ) {
       penalty += 1;
     }
 
     if (
-      !technician.specializations.includes(fault.recommendedSpecialization) &&
-      !technician.specializations.includes('UNIVERSAL')
+      !technician.specializations?.includes(fault.recommendedSpecialization) &&
+      !technician.specializations?.includes('UNIVERSAL')
     ) {
       penalty += 0.3;
     }

@@ -9,7 +9,14 @@ import { InitialRepairRequestsModule } from './initial-repair-requests/initial-r
 import { AssignedRepairTasksModule } from './assigned-repair-tasks/assigned-repair-tasks.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, UsersModule, TicketsModule, InitialRepairRequestsModule, AssignedRepairTasksModule],
+  imports: [
+    PrismaModule,
+    AuthModule,
+    UsersModule,
+    TicketsModule,
+    InitialRepairRequestsModule,
+    AssignedRepairTasksModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

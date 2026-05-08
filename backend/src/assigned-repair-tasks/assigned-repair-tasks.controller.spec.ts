@@ -8,10 +8,19 @@ describe('AssignedRepairTasksController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignedRepairTasksController],
-      providers: [AssignedRepairTasksService],
+      providers: [
+        {
+          provide: AssignedRepairTasksService,
+          useValue: {
+            createAssignedRepairTask: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
-    controller = module.get<AssignedRepairTasksController>(AssignedRepairTasksController);
+    controller = module.get<AssignedRepairTasksController>(
+      AssignedRepairTasksController,
+    );
   });
 
   it('should be defined', () => {

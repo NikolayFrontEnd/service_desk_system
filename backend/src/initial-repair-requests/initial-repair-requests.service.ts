@@ -16,19 +16,20 @@ export class InitialRepairRequestsService {
       'NOT_URGENT',
     ];
 
-    if (!allowedWorkImpacts.includes(createInitialRepairRequestDto.workImpact)) {
+    if (
+      !allowedWorkImpacts.includes(createInitialRepairRequestDto.workImpact)
+    ) {
       throw new BadRequestException('Invalid work impact');
     }
 
-    const initialRepairRequest =
-      await this.prisma.initialRepairRequest.create({
-        data: {
-          department: createInitialRepairRequestDto.department,
-          floor: createInitialRepairRequestDto.floor,
-          room: createInitialRepairRequestDto.room,
-          workImpact: createInitialRepairRequestDto.workImpact,
-        },
-      });
+    const initialRepairRequest = await this.prisma.initialRepairRequest.create({
+      data: {
+        department: createInitialRepairRequestDto.department,
+        floor: createInitialRepairRequestDto.floor,
+        room: createInitialRepairRequestDto.room,
+        workImpact: createInitialRepairRequestDto.workImpact,
+      },
+    });
 
     return {
       message: 'Initial repair request created successfully',

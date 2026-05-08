@@ -7,14 +7,11 @@ datasource db {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  name         String
-  email        String @unique
-  passwordHash String
-  role         String
-
-  employee   Employee?
-  technician Technician?
+  id           Int     @id @default(autoincrement())
+  name         String?
+  email        String?
+  passwordHash String?
+  role         String?
 
   @@map("users")
 }
@@ -25,8 +22,6 @@ model Employee {
   department String?
   floor      Int?
   room       Int?
-
-  user User @relation(fields: [userId], references: [id])
 
   @@map("employees")
 }
@@ -43,41 +38,34 @@ model Technician {
   maxDailyLoadMinutes Int?
   currentDepartment   String?
 
-  user User @relation(fields: [userId], references: [id])
-
   @@map("technicians")
 }
 
-model Testing {
-  id   Int    @id @default(autoincrement())
-  name String @map("Name")
-
-  @@map("test")
-}
 model InitialRepairRequest {
-  id         Int    @id @default(autoincrement())
-  department String
-  floor      Int
-  room       Int
-  workImpact String @map("workImpact")
+  id         Int     @id @default(autoincrement())
+  department String?
+  floor      Int?
+  room       Int?
+  workImpact String? @map("workImpact")
 
   @@map("initial_repair_requests")
 }
+
 model AssignedRepairTask {
   id                     Int     @id @default(autoincrement())
-  originalRequestId      Int     @unique @map("originalRequestId")
+  originalRequestId      Int     @unique @map(" originalRequestId")
   department             String?
   floor                  Int?
   room                   Int?
-  faultTypeCode          String  @map("faultTypeCode")
-  category               String
-  complexityLevel        Int     @map("complexityLevel")
-  estimatedRepairMinutes Int     @map("estimatedRepairMinutes")
-  priority               String
+  faultTypeCode          String? @map("faultTypeCode")
+  category               String?
+  complexityLevel        Int?    @map("complexityLevel")
+  estimatedRepairMinutes Int?    @map("estimatedRepairMinutes")
+  priority               String?
   assignedTechnicianId   Int?    @map("assignedTechnicianId")
-  createdAt              Int     @map("createdAt")
+  createdAt              Int?    @map("createdAt")
   startedAt              String? @map("startedAt")
-  status                 String
+  status                 String?
 
   @@map("assigned_repair_tasks")
 }
