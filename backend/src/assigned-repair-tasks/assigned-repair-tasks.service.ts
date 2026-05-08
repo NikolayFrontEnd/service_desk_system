@@ -344,5 +344,57 @@ export class AssignedRepairTasksService {
     }
 
     return penalty;
+    
   }
+  async startRepairTask(taskId: number) {
+  const task = await this.prisma.assignedRepairTask.findUnique({
+    where: {
+      id: taskId,
+    },
+  });
+
+  if (!task) {
+    throw new BadRequestException('Assigned repair task was not found');
+  }
+
+  if (task.status === 'IN_PROGRESS') {
+    throw new BadRequestException('This repair task is already in progress');
+  }
+
+  if (task.status === 'COMPLETED') {
+    throw new BadRequestException('This repair task is already completed');
+  }
+
+  const startedAt = new Date().toISOString();
+
+  const updatedTask = await this.prisma.$transaction(async (tx) => {
+    const updatedRepairTask = await tx.assignedRepairTask.update({
+      where: {
+        id: taskId,
+      },
+      data: {
+        startedAt: startedAt,
+        status: 'IN_PROGRESS',
+      },
+    });
+
+    if (task.assignedTechnicianId) {
+      await tx.technician.update({
+        where: {
+          id: task.assignedTechnicianId,
+        },
+        data: {
+          currentStatus: 'BUSY',
+        },
+      });
+    }
+
+    return updatedRepairTask;
+  });
+
+  return {
+    message: 'Repair task was started successfully',
+    task: updatedTask,
+  };
+}
 }
