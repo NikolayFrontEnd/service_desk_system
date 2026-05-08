@@ -63,3 +63,21 @@ model InitialRepairRequest {
 
   @@map("initial_repair_requests")
 }
+model AssignedRepairTask {
+  id                     Int     @id @default(autoincrement())
+  originalRequestId      Int     @unique @map("originalRequestId")
+  department             String?
+  floor                  Int?
+  room                   Int?
+  faultTypeCode          String  @map("faultTypeCode")
+  category               String
+  complexityLevel        Int     @map("complexityLevel")
+  estimatedRepairMinutes Int     @map("estimatedRepairMinutes")
+  priority               String
+  assignedTechnicianId   Int?    @map("assignedTechnicianId")
+  createdAt              Int     @map("createdAt")
+  startedAt              String? @map("startedAt")
+  status                 String
+
+  @@map("assigned_repair_tasks")
+}
