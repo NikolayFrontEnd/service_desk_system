@@ -409,6 +409,10 @@ async finishRepairTask(taskId: number) {
   }
 
   const result = await this.prisma.$transaction(async (tx) => {
+    let newCurrentLoadMinutes = 0;
+    let newActiveTasksCount = 0;
+    let newCurrentStatus = 'AVAILABLE';
+
     if (task.assignedTechnicianId) {
       const technician = await tx.technician.findUnique({
         where: {
@@ -417,19 +421,29 @@ async finishRepairTask(taskId: number) {
       });
 
       if (technician) {
-        const newCurrentLoadMinutes =
+        newCurrentLoadMinutes =
           (technician.currentLoadMinutes ?? 0) -
           (task.estimatedRepairMinutes ?? 0);
 
-        const newActiveTasksCount = (technician.activeTasksCount ?? 0) - 1;
+        newActiveTasksCount = (technician.activeTasksCount ?? 0) - 1;
+
+        newCurrentLoadMinutes = Math.max(newCurrentLoadMinutes, 0);
+        newActiveTasksCount = Math.max(newActiveTasksCount, 0);
+
+        if (newActiveTasksCount === 0) {
+          newCurrentStatus = 'AVAILABLE';
+        } else {
+          newCurrentStatus = technician.currentStatus ?? 'BUSY';
+        }
 
         await tx.technician.update({
           where: {
             id: task.assignedTechnicianId,
           },
           data: {
-            currentLoadMinutes: Math.max(newCurrentLoadMinutes, 0),
-            activeTasksCount: Math.max(newActiveTasksCount, 0),
+            currentLoadMinutes: newCurrentLoadMinutes,
+            activeTasksCount: newActiveTasksCount,
+            currentStatus: newCurrentStatus,
           },
         });
       }
@@ -441,14 +455,22 @@ async finishRepairTask(taskId: number) {
       },
     });
 
-    return deletedTask;
+    return {
+      deletedTask,
+      newCurrentLoadMinutes,
+      newActiveTasksCount,
+      newCurrentStatus,
+    };
   });
 
   return {
     message: 'Repair task was finished and deleted successfully',
-    deletedTaskId: result.id,
-    removedMinutes: task.estimatedRepairMinutes,
+    deletedTaskId: result.deletedTask.id,
     technicianId: task.assignedTechnicianId,
+    removedMinutes: task.estimatedRepairMinutes,
+    technicianCurrentLoadMinutes: result.newCurrentLoadMinutes,
+    technicianActiveTasksCount: result.newActiveTasksCount,
+    technicianCurrentStatus: result.newCurrentStatus,
   };
 }
 }
