@@ -408,15 +408,47 @@ async finishRepairTask(taskId: number) {
     throw new BadRequestException('Assigned repair task was not found');
   }
 
-  await this.prisma.assignedRepairTask.delete({
-    where: {
-      id: taskId,
-    },
+  const result = await this.prisma.$transaction(async (tx) => {
+    if (task.assignedTechnicianId) {
+      const technician = await tx.technician.findUnique({
+        where: {
+          id: task.assignedTechnicianId,
+        },
+      });
+
+      if (technician) {
+        const newCurrentLoadMinutes =
+          (technician.currentLoadMinutes ?? 0) -
+          (task.estimatedRepairMinutes ?? 0);
+
+        const newActiveTasksCount = (technician.activeTasksCount ?? 0) - 1;
+
+        await tx.technician.update({
+          where: {
+            id: task.assignedTechnicianId,
+          },
+          data: {
+            currentLoadMinutes: Math.max(newCurrentLoadMinutes, 0),
+            activeTasksCount: Math.max(newActiveTasksCount, 0),
+          },
+        });
+      }
+    }
+
+    const deletedTask = await tx.assignedRepairTask.delete({
+      where: {
+        id: taskId,
+      },
+    });
+
+    return deletedTask;
   });
 
   return {
     message: 'Repair task was finished and deleted successfully',
-    deletedTaskId: taskId,
+    deletedTaskId: result.id,
+    removedMinutes: task.estimatedRepairMinutes,
+    technicianId: task.assignedTechnicianId,
   };
 }
 }
