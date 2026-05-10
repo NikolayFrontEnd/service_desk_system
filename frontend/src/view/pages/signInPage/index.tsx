@@ -1,22 +1,56 @@
 import { useState } from "react";
-import SignInForm from "../../components/signInForm"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import SignInForm from "../../components/signInForm";
+
+type LoginResponse = {
+  message: string;
+  accessToken: string;
+  user: {
+    id: number;
+    name: string;
+    role: string;
+  };
+};
 
 const SignInPage = () => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-const handleSignIn = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-console.log({
-      email,
-      password,
-    });
+  const navigate = useNavigate();
+
+  const handleSignIn = async () => {
+    try {
+      const response = await axios.post<LoginResponse>(
+        "http://localhost:3000/auth/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
+
+      console.log("Backend response:", response.data);
+
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      navigate("/main");
+    } catch (error) {
+      console.log("Login error:", error);
+    }
   };
- 
 
-    return (
-        <div>
-            <SignInForm email={email} password={password} setEmail={setEmail} setPassword={setPassword} handleSignIn = {handleSignIn} />
-        </div>
-    )
-}
+  return (
+    <div>
+      <SignInForm
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
+        handleSignIn={handleSignIn}
+      />
+    </div>
+  );
+};
+
 export default SignInPage;
