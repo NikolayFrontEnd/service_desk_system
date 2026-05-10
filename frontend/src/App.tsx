@@ -1,11 +1,13 @@
-import style from './index.module.css'
+import MainPage from './view/pages/mainPage'
 import SignInPage from './view/pages/signInPage'
 function App() {
 
   return (
     <>
-      <SignInPage />
-    </>
+{/*       <SignInPage />
+ */}    
+ <MainPage />
+ </>
   )
 }
 

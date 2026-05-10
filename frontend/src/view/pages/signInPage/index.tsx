@@ -1,10 +1,9 @@
-import Button from "../../primitives/Button";
-import style from './index.module.css'
+import SignInForm from "../../components/signInForm"
+
 const SignInPage = () => {
     return (
         <div>
-            SignInPage
-            <Button className = {style.button}>Вход</Button>
+            <SignInForm />
         </div>
     )
 }
