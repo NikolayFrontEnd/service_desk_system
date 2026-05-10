@@ -1,5 +1,4 @@
 const MainPage = () => {
-
     return (
         <div>
             MainPage        
