@@ -4,6 +4,7 @@ import Button from "../../primitives/button";
 import InitialRepairRequestsList from "../../components/initialRepairRequestsList";
 import AssignedRepairTasksList from "../../components/assignedRepairTasksList";
 import style from "./index.module.css";
+import { useNavigate } from "react-router-dom";
 
 type User = {
   id: number;
@@ -143,6 +144,7 @@ const assignedRepairTasksList = [
 
 const MainPage = () => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -156,11 +158,17 @@ const MainPage = () => {
     return <div>No user data found</div>;
   }
 
+const handleSignOut = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
+  navigate("/");
+}
+
   return (
     <main className={style.page}>
       <div className={style.shell}>
         <section className={style.headerCard}>
-          <UserHeader name={user.name} role={user.role} />
+          <UserHeader name={user.name} role={user.role} handleSignOut={handleSignOut} />
         </section>
         {user.role === "EMPLOYEE" && (
           <div className={style.actions}>

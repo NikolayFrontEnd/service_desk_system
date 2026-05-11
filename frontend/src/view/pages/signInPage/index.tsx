@@ -12,12 +12,13 @@ const SignInPage = () => {
   const handleSignIn = async () => {
     try {
        await authService.login(email, password);
-
       navigate("/main");
     } catch (error) {
       console.log("Login error:", error);
     }
   };
+
+
 
   return (
     <div>

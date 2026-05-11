@@ -3,15 +3,18 @@ import style from './index.module.css';
 type UserHeaderProps = {
   name: string;
   role: string;
+  handleSignOut: () => void;
 };
 
-const UserHeader = ({ name, role }: UserHeaderProps) => {
+const UserHeader = ({ name, role, handleSignOut }: UserHeaderProps) => {
 return (
     <div>
    
       <p> {name}</p>
       <p> {role}</p>
-      <Button className = {style.button}> Выход </Button>
+      <Button className = {style.button} onClick={handleSignOut}>
+        Выход
+      </Button>
     </div>
   );
 }
