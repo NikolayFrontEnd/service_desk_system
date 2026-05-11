@@ -11,10 +11,7 @@ const SignInPage = () => {
 
   const handleSignIn = async () => {
     try {
-      const session = await authService.login(email, password);
-
-      console.log("Logged in user:", session.user.name);
-      console.log("User role:", session.user.role);
+       await authService.login(email, password);
 
       navigate("/main");
     } catch (error) {
