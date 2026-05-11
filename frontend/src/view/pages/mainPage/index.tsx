@@ -3,6 +3,7 @@ import UserHeader from "../../components/userHeader";
 import Button from "../../primitives/button";
 import InitialRepairRequestsList from "../../components/initialRepairRequestsList";
 import AssignedRepairTasksList from "../../components/assignedRepairTasksList";
+import style from "./index.module.css";
 
 type User = {
   id: number;
@@ -156,15 +157,28 @@ const MainPage = () => {
   }
 
   return (
-    <> 
-    
-<UserHeader name = {user.name} role = {user.role}/>
-{user.role === "EMPLOYEE" && (
-  <Button>Создать заявку на поломку</Button>
-)}
-<InitialRepairRequestsList requests={initialRepairRequestsList} />
-<AssignedRepairTasksList tasks={assignedRepairTasksList} />
-      </>
+    <main className={style.page}>
+      <div className={style.shell}>
+        <section className={style.headerCard}>
+          <UserHeader name={user.name} role={user.role} />
+        </section>
+        {user.role === "EMPLOYEE" && (
+          <div className={style.actions}>
+            <Button className={style.addButton}>Создать заявку на поломку</Button>
+          </div>
+        )}
+
+        <div className={style.listsGrid}>
+          <section className={`${style.listPanel} ${style.requestsPanel}`}>
+            <InitialRepairRequestsList requests={initialRepairRequestsList} />
+          </section>
+
+          <section className={`${style.listPanel} ${style.tasksPanel}`}>
+            <AssignedRepairTasksList tasks={assignedRepairTasksList} />
+          </section>
+        </div>
+      </div>
+    </main>
   );
 };
 

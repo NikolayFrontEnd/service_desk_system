@@ -9,8 +9,8 @@ const UserHeader = ({ name, role }: UserHeaderProps) => {
 return (
     <div>
    
-      <p>Name: {name}</p>
-      <p>Role: {role}</p>
+      <p> {name}</p>
+      <p> {role}</p>
       <Button className = {style.button}> Выход </Button>
     </div>
   );

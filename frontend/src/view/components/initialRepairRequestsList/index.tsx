@@ -17,7 +17,7 @@ const InitialRepairRequestsList = ({
 }: InitialRepairRequestsListProps) => {
   return (
     <div>
-      <h2>Initial repair requests</h2>
+      <h2>Новые заявки о поломках</h2>
 
       {requests.map((item) => (
         <div key={item.request.id}>

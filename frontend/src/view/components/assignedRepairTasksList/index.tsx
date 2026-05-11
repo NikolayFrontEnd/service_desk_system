@@ -40,30 +40,26 @@ type AssignedRepairTasksListProps = {
 const AssignedRepairTasksList = ({ tasks }: AssignedRepairTasksListProps) => {
   return (
     <div>
-      <h2>Assigned repair tasks</h2>
+      <h2>Назначенные ремонтные задачи</h2>
 
       {tasks.map((item) => (
         <div key={item.task.id}>
           <h3>{item.selectedFault.title}</h3>
 
-          <p>Task ID: {item.task.id}</p>
-          <p>Original request ID: {item.task.originalRequestId}</p>
+
           <p>Department: {item.task.department}</p>
           <p>Floor: {item.task.floor}</p>
           <p>Room: {item.task.room}</p>
-          <p>Fault code: {item.task.faultTypeCode}</p>
           <p>Category: {item.task.category}</p>
           <p>Complexity: {item.task.complexityLevel}</p>
-          <p>Estimated repair time: {item.task.estimatedRepairMinutes} minutes</p>
+          <p>Estimated repair time: {item.task.estimatedRepairMinutes} минут</p>
           <p>Priority: {item.task.priority}</p>
           <p>Status: {item.task.status}</p>
 
-          <h4>Assigned technician</h4>
-          <p>Technician ID: {item.assignedTechnician.id}</p>
-          <p>Specialization: {item.assignedTechnician.specializations}</p>
-          <p>Skill level: {item.assignedTechnician.skillLevel}</p>
-          <p>Status: {item.assignedTechnician.currentStatus}</p>
-
+          <h4>Назначенный ремонтник</h4>
+          <p>Специализация: {item.assignedTechnician.specializations}</p>
+          <p>Уровень навыков: {item.assignedTechnician.skillLevel}</p>
+          <p>Статус: {item.assignedTechnician.currentStatus}</p>
           <hr />
         </div>
       ))}

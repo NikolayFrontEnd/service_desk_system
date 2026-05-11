@@ -1,0 +1,267 @@
+.page {
+  min-height: 100vh;
+  padding: 32px clamp(16px, 4vw, 48px);
+  background:
+    radial-gradient(circle at top left, rgba(43, 120, 228, 0.14), transparent 34%),
+    linear-gradient(135deg, #ebf4f8 0%, #ffffff 46%, #ebf4f8 100%);
+  color: #323232;
+}
+
+.page * {
+  box-sizing: border-box;
+}
+
+.shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.headerCard {
+  margin-bottom: 18px;
+}
+
+.headerCard > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 20px;
+  padding: 24px;
+  border: 1px solid rgba(124, 156, 191, 0.28);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 45px rgba(50, 50, 50, 0.08);
+}
+
+.headerCard p {
+  margin: 0;
+}
+
+.headerCard p:first-of-type {
+  color: #323232;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.headerCard p:nth-of-type(2) {
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(43, 120, 228, 0.12);
+  color: #2b78e4;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.headerCard button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: auto;
+  min-width: 128px;
+  height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 14px;
+  background: #ff7171;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(255, 113, 113, 0.28);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.headerCard button:hover {
+  background: #f85f5f;
+  box-shadow: 0 8px 18px rgba(255, 113, 113, 0.24);
+  transform: translateY(-1px);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.addButton {
+  min-height: 48px;
+  max-width: 100%;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 16px;
+  background: #2b78e4;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(43, 120, 228, 0.24);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.addButton:hover {
+  background: #226cce;
+  box-shadow: 0 10px 20px rgba(43, 120, 228, 0.2);
+  transform: translateY(-1px);
+}
+
+.listsGrid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(360px, 1.35fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.listPanel {
+  min-width: 0;
+  border: 1px solid rgba(124, 156, 191, 0.28);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 18px 45px rgba(50, 50, 50, 0.08);
+  overflow: hidden;
+}
+
+.listPanel > div {
+  padding: 24px;
+}
+
+.listPanel h2 {
+  margin: 0 0 18px;
+  color: #323232;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.listPanel h2::after {
+  display: block;
+  width: 54px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: #14a38b;
+  content: "";
+}
+
+.tasksPanel h2::after {
+  background: #2b78e4;
+}
+
+.listPanel > div > div {
+  position: relative;
+  padding: 18px;
+  border: 1px solid rgba(178, 184, 190, 0.42);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(50, 50, 50, 0.06);
+}
+
+.listPanel > div > div + div {
+  margin-top: 16px;
+}
+
+.listPanel h3 {
+  margin: 0 0 14px;
+  padding-right: 84px;
+  color: #323232;
+  font-size: 19px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.listPanel h4 {
+  margin: 18px 0 10px;
+  color: #756f86;
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.listPanel p {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin: 4px 6px 4px 0;
+  padding: 7px 10px;
+  border-radius: 12px;
+  background: #ebf4f8;
+  color: #323232;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.listPanel hr {
+  display: none;
+}
+
+.requestsPanel > div > div {
+  border-left: 5px solid #14a38b;
+}
+
+.tasksPanel > div > div {
+  border-left: 5px solid #2b78e4;
+}
+
+.tasksPanel > div > div::before {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(242, 172, 87, 0.18);
+  color: #9a6119;
+  font-size: 12px;
+  font-weight: 850;
+  content: "Task";
+}
+
+@media (max-width: 900px) {
+  .listsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .page {
+    padding: 18px 12px;
+  }
+
+  .headerCard > div {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .headerCard button {
+    grid-column: auto;
+    grid-row: auto;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .addButton {
+    width: 100%;
+  }
+
+  .listPanel > div {
+    padding: 18px;
+  }
+
+  .listPanel h3 {
+    padding-right: 0;
+  }
+
+  .tasksPanel > div > div::before {
+    position: static;
+    display: inline-flex;
+    margin-bottom: 10px;
+  }
+
+  .listPanel p {
+    width: 100%;
+    margin-right: 0;
+  }
+}
