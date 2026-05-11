@@ -1,17 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import SignInForm from "../../components/signInForm";
-
-type LoginResponse = {
-  message: string;
-  accessToken: string;
-  user: {
-    id: number;
-    name: string;
-    role: string;
-  };
-};
+import { authService } from "../../../domain/services/AuthService";
 
 const SignInPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -19,26 +9,18 @@ const SignInPage = () => {
 
   const navigate = useNavigate();
 
-const handleSignIn = async () => {
-  try {
-    const response = await axios.post<LoginResponse>(
-      "http://localhost:3000/auth/login",
-      {
-        email,
-        password,
-      }
-    );
+  const handleSignIn = async () => {
+    try {
+      const session = await authService.login(email, password);
 
-    const { accessToken, user } = response.data;
+      console.log("Logged in user:", session.user.name);
+      console.log("User role:", session.user.role);
 
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    navigate("/main");
-  } catch (error) {
-    console.log("Login error:", error);
-  }
-};
+      navigate("/main");
+    } catch (error) {
+      console.log("Login error:", error);
+    }
+  };
 
   return (
     <div>
