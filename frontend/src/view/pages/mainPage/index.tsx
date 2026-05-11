@@ -24,8 +24,6 @@ const MainPage = () => {
   return (
     <div>
       <h1>Main page</h1>
-
-      <p>User ID: {user.id}</p>
       <p>Name: {user.name}</p>
       <p>Role: {user.role}</p>
     </div>

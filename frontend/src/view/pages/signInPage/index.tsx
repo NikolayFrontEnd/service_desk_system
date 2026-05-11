@@ -19,26 +19,26 @@ const SignInPage = () => {
 
   const navigate = useNavigate();
 
-  const handleSignIn = async () => {
-    try {
-      const response = await axios.post<LoginResponse>(
-        "http://localhost:3000/auth/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
+const handleSignIn = async () => {
+  try {
+    const response = await axios.post<LoginResponse>(
+      "http://localhost:3000/auth/login",
+      {
+        email,
+        password,
+      }
+    );
 
-      console.log("Backend response:", response.data);
+    const { accessToken, user } = response.data;
 
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("user", JSON.stringify(user));
 
-      navigate("/main");
-    } catch (error) {
-      console.log("Login error:", error);
-    }
-  };
+    navigate("/main");
+  } catch (error) {
+    console.log("Login error:", error);
+  }
+};
 
   return (
     <div>
