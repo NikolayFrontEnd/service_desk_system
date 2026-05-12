@@ -47,7 +47,7 @@ export class InitialRepairRequestsGateway {
     };
 
     await axios.post<CreateInitialRepairRequestResponseDto>(
-      `${this.API_BASE_URL}/assigned-repair-tasks`,
+      `${this.API_BASE_URL}/initial-repair-requests`,
       body,
       {
         headers: {
