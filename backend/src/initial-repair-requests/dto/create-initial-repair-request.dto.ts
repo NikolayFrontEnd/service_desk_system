@@ -5,8 +5,6 @@ export type WorkImpact =
   | 'NOT_URGENT';
 
 export class CreateInitialRepairRequestDto {
-  department!: string;
-  floor!: number;
-  room!: number;
+
   workImpact!: WorkImpact;
 }

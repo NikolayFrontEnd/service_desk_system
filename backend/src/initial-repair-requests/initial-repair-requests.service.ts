@@ -8,6 +8,7 @@ export class InitialRepairRequestsService {
 
   async createInitialRepairRequest(
     createInitialRepairRequestDto: CreateInitialRepairRequestDto,
+    userId: number,
   ) {
     const allowedWorkImpacts = [
       'CANNOT_WORK',
@@ -22,11 +23,21 @@ export class InitialRepairRequestsService {
       throw new BadRequestException('Invalid work impact');
     }
 
+    const employee = await this.prisma.employee.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+
+    if (!employee) {
+      throw new BadRequestException('Employee profile was not found');
+    }
+
     const initialRepairRequest = await this.prisma.initialRepairRequest.create({
       data: {
-        department: createInitialRepairRequestDto.department,
-        floor: createInitialRepairRequestDto.floor,
-        room: createInitialRepairRequestDto.room,
+        department: employee.department,
+        floor: employee.floor,
+        room: employee.room,
         workImpact: createInitialRepairRequestDto.workImpact,
       },
     });
@@ -38,15 +49,15 @@ export class InitialRepairRequestsService {
   }
 
   async getInitialRepairRequests() {
-  const requests = await this.prisma.initialRepairRequest.findMany({
-    orderBy: {
-      id: 'asc',
-    },
-  });
+    const requests = await this.prisma.initialRepairRequest.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+    });
 
-  return {
-    message: 'Initial repair requests loaded successfully',
-    requests: requests,
-  };
-}
+    return {
+      message: 'Initial repair requests loaded successfully',
+      requests: requests,
+    };
+  }
 }
