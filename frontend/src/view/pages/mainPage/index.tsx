@@ -65,9 +65,13 @@ const MainPage = () => {
     navigate("/");
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+if (isLoading) {
+  return (
+    <div className={style.loaderScreen}>
+      <div className={style.loader}></div>
+    </div>
+  );
+}
 
   if (!user) {
     return <div>No user data found</div>;
