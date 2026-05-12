@@ -1,23 +1,55 @@
 import { Technician } from "./Technician";
 
 export class AssignedRepairTask {
+  private _id: number;
+  private _originalRequestId: number;
+  private _department: string;
+  private _floor: number;
+  private _room: number;
+  private _faultTypeCode: string;
+  private _category: string;
+  private _complexityLevel: number;
+  private _estimatedRepairMinutes: number;
+  private _priority: string;
+  private _assignedTechnicianId: number;
+  private _createdAt: number;
+  private _startedAt: string | null;
+  private _status: string;
+  private _technician: Technician;
+
   constructor(
-    private _id: number,
-    private _originalRequestId: number,
-    private _department: string,
-    private _floor: number,
-    private _room: number,
-    private _faultTypeCode: string,
-    private _category: string,
-    private _complexityLevel: number,
-    private _estimatedRepairMinutes: number,
-    private _priority: string,
-    private _assignedTechnicianId: number,
-    private _createdAt: number,
-    private _startedAt: string | null,
-    private _status: string,
-    private _technician: Technician
-  ) {}
+    id: number,
+    originalRequestId: number,
+    department: string,
+    floor: number,
+    room: number,
+    faultTypeCode: string,
+    category: string,
+    complexityLevel: number,
+    estimatedRepairMinutes: number,
+    priority: string,
+    assignedTechnicianId: number,
+    createdAt: number,
+    startedAt: string | null,
+    status: string,
+    technician: Technician
+  ) {
+    this._id = id;
+    this._originalRequestId = originalRequestId;
+    this._department = department;
+    this._floor = floor;
+    this._room = room;
+    this._faultTypeCode = faultTypeCode;
+    this._category = category;
+    this._complexityLevel = complexityLevel;
+    this._estimatedRepairMinutes = estimatedRepairMinutes;
+    this._priority = priority;
+    this._assignedTechnicianId = assignedTechnicianId;
+    this._createdAt = createdAt;
+    this._startedAt = startedAt;
+    this._status = status;
+    this._technician = technician;
+  }
 
   get id(): number {
     return this._id;
