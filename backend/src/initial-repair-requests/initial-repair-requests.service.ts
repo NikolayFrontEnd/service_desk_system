@@ -36,4 +36,17 @@ export class InitialRepairRequestsService {
       request: initialRepairRequest,
     };
   }
+
+  async getInitialRepairRequests() {
+  const requests = await this.prisma.initialRepairRequest.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+  });
+
+  return {
+    message: 'Initial repair requests loaded successfully',
+    requests: requests,
+  };
+}
 }
