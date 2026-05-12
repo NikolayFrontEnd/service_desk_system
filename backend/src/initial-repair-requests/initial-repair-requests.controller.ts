@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { InitialRepairRequestsService } from './initial-repair-requests.service';
 import { CreateInitialRepairRequestDto } from './dto/create-initial-repair-request.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -17,5 +17,10 @@ export class InitialRepairRequestsController {
     return this.initialRepairRequestsService.createInitialRepairRequest(
       createInitialRepairRequestDto,
     );
+  }
+
+    @Get()
+  getInitialRepairRequests() {
+    return this.initialRepairRequestsService.getInitialRepairRequests();
   }
 }
