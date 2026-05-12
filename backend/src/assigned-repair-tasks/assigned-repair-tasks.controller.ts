@@ -1,4 +1,4 @@
-import { Body, Controller, Param, ParseIntPipe, Patch, Post, Delete, UseGuards } from '@nestjs/common';
+import { Body, Controller, Param, ParseIntPipe, Patch, Post, Delete, UseGuards, Get } from '@nestjs/common';
 import { AssignedRepairTasksService } from './assigned-repair-tasks.service';
 import { CreateAssignedRepairTaskDto } from './dto/create-assigned-repair-task.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -9,6 +9,12 @@ export class AssignedRepairTasksController {
   constructor(
     private readonly assignedRepairTasksService: AssignedRepairTasksService,
   ) {}
+
+  @Get()
+  getAssignedRepairTasks() {
+    return this.assignedRepairTasksService.getAssignedRepairTasks();
+  }
+  
 
   @Post()
   createAssignedRepairTask(
