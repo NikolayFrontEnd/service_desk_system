@@ -1,65 +1,35 @@
-type AssignedRepairTaskItem = {
-  task: {
-    id: number;
-    originalRequestId: number;
-    department: string;
-    floor: number;
-    room: number;
-    faultTypeCode: string;
-    category: string;
-    complexityLevel: number;
-    estimatedRepairMinutes: number;
-    priority: string;
-    assignedTechnicianId: number;
-    createdAt: number;
-    startedAt: number | null;
-    status: string;
-  };
-
-  selectedFault: {
-    title: string;
-    code: string;
-    category: string;
-    complexity: number;
-    estimatedRepairMinutes: number;
-  };
-
-  assignedTechnician: {
-    id: number;
-    userId: number;
-    specializations: string;
-    skillLevel: number;
-    currentStatus: string;
-  };
-};
+import type { AssignedRepairTask } from "../../../domain/entities/AssignedRepairTask";
 
 type AssignedRepairTasksListProps = {
-  tasks: AssignedRepairTaskItem[];
+  tasks: AssignedRepairTask[];
 };
 
 const AssignedRepairTasksList = ({ tasks }: AssignedRepairTasksListProps) => {
   return (
     <div>
-      <h2>Назначенные ремонтные задачи</h2>
+      <h2>Assigned repair tasks</h2>
 
-      {tasks.map((item) => (
-        <div key={item.task.id}>
-          <h3>{item.selectedFault.title}</h3>
+      {tasks.map((task) => (
+        <div key={task.id}>
+          <h3>{task.faultTypeCode}</h3>
 
+          <p>Task ID: {task.id}</p>
+          <p>Original request ID: {task.originalRequestId}</p>
+          <p>Department: {task.department}</p>
+          <p>Floor: {task.floor}</p>
+          <p>Room: {task.room}</p>
+          <p>Category: {task.category}</p>
+          <p>Complexity: {task.complexityLevel}</p>
+          <p>Estimated repair time: {task.estimatedRepairMinutes} minutes</p>
+          <p>Priority: {task.priority}</p>
+          <p>Status: {task.status}</p>
 
-          <p>Department: {item.task.department}</p>
-          <p>Floor: {item.task.floor}</p>
-          <p>Room: {item.task.room}</p>
-          <p>Category: {item.task.category}</p>
-          <p>Complexity: {item.task.complexityLevel}</p>
-          <p>Estimated repair time: {item.task.estimatedRepairMinutes} минут</p>
-          <p>Priority: {item.task.priority}</p>
-          <p>Status: {item.task.status}</p>
+          <h4>Technician</h4>
+          <p>Name: {task.technician.name}</p>
+          <p>Specializations: {task.technician.specializations}</p>
+          <p>Skill level: {task.technician.skillLevel}</p>
+          <p>Status: {task.technician.currentStatus}</p>
 
-          <h4>Назначенный ремонтник</h4>
-          <p>Специализация: {item.assignedTechnician.specializations}</p>
-          <p>Уровень навыков: {item.assignedTechnician.skillLevel}</p>
-          <p>Статус: {item.assignedTechnician.currentStatus}</p>
           <hr />
         </div>
       ))}

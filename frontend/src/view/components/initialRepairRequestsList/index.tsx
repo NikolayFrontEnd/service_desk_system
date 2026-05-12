@@ -1,15 +1,7 @@
-type InitialRepairRequestItem = {
-  request: {
-    id: number;
-    department: string;
-    floor: number;
-    room: number;
-    workImpact: string;
-  };
-};
+import type { InitialRepairRequest } from "../../../domain/entities/InitialRepairRequest";
 
 type InitialRepairRequestsListProps = {
-  requests: InitialRepairRequestItem[];
+  requests: InitialRepairRequest[];
 };
 
 const InitialRepairRequestsList = ({
@@ -17,15 +9,15 @@ const InitialRepairRequestsList = ({
 }: InitialRepairRequestsListProps) => {
   return (
     <div>
-      <h2>Новые заявки о поломках</h2>
+      <h2>Initial repair requests</h2>
 
-      {requests.map((item) => (
-        <div key={item.request.id}>
-          <p>Request ID: {item.request.id}</p>
-          <p>Department: {item.request.department}</p>
-          <p>Floor: {item.request.floor}</p>
-          <p>Room: {item.request.room}</p>
-          <p>Work impact: {item.request.workImpact}</p>
+      {requests.map((request) => (
+        <div key={request.id}>
+          <p>ID: {request.id}</p>
+          <p>Department: {request.department}</p>
+          <p>Floor: {request.floor}</p>
+          <p>Room: {request.room}</p>
+          <p>Work impact: {request.workImpact}</p>
 
           <hr />
         </div>
