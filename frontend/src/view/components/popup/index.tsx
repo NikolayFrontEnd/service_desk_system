@@ -2,44 +2,32 @@ import { useState } from "react";
 import Dialog from "../../primitives/dialog";
 import Button from "../../primitives/button";
 import styles from "./index.module.css";
-
-type WorkImpact = "CANNOT_WORK" | "PARTIALLY_CAN_WORK" | "CAN_WAIT" | "NOT_URGENT";
-
-const workImpactOptions: { value: WorkImpact; label: string }[] = [
-  {
-    value: "CANNOT_WORK",
-    label: "Не могу продолжать работу",
-  },
-  {
-    value: "PARTIALLY_CAN_WORK",
-    label: "Могу работать частично",
-  },
-  {
-    value: "CAN_WAIT",
-    label: "Могу подождать",
-  },
-  {
-    value: "NOT_URGENT",
-    label: "Не срочно",
-  },
-];
+import {
+  type WorkImpact,
+  workImpactOptions,
+} from "../../../domain/valueObjects/WorkImpact";
 
 type CreateInitialRepairRequestDialogProps = {
   isOpen: boolean;
   onClose: () => void;
+  onCreateRequest: (workImpact: WorkImpact) => Promise<void>;
 };
 
 const CreateInitialRepairRequestDialog = ({
   isOpen,
   onClose,
+  onCreateRequest,
 }: CreateInitialRepairRequestDialogProps) => {
   const [selectedWorkImpact, setSelectedWorkImpact] =
     useState<WorkImpact | null>(null);
 
-  const handleCreateRequest = () => {
-    console.log("Send to backend:", {
-      workImpact: selectedWorkImpact,
-    });
+  const handleCreateRequest = async () => {
+    if (!selectedWorkImpact) {
+      console.log("Please choose work impact");
+      return;
+    }
+
+    await onCreateRequest(selectedWorkImpact);
   };
 
   return (
@@ -66,7 +54,7 @@ const CreateInitialRepairRequestDialog = ({
       ))}
 
       <Button className={styles.submitButton} onClick={handleCreateRequest}>
-       Сообщить о поломке
+        Сообщить о поломке
       </Button>
     </Dialog>
   );

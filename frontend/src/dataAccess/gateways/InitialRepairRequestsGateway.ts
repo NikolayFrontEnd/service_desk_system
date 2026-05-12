@@ -1,6 +1,8 @@
 import axios from "axios";
 import type { InitialRepairRequestsResponseDto } from "../dtos/InitialRepairRequestsDto";
 import { InitialRepairRequest } from "../../domain/entities/InitialRepairRequest";
+import type { CreateInitialRepairRequestRequestDto, CreateInitialRepairRequestResponseDto } from "../dtos/CreateInitialRepairRequestDto";
+import type { WorkImpact } from "../../domain/valueObjects/WorkImpact";
 
 export class InitialRepairRequestsGateway {
   private readonly API_BASE_URL = "http://localhost:3000";
@@ -31,6 +33,28 @@ export class InitialRepairRequestsGateway {
     } catch {
       throw new Error("Failed to load initial repair requests");
     }
+  }
+
+    async create(workImpact: WorkImpact): Promise<void> {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+
+    const body: CreateInitialRepairRequestRequestDto = {
+      workImpact,
+    };
+
+    await axios.post<CreateInitialRepairRequestResponseDto>(
+      `${this.API_BASE_URL}/assigned-repair-tasks`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   }
 }
 

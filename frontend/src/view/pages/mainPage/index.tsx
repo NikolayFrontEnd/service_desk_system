@@ -14,6 +14,7 @@ import type { AssignedRepairTask } from "../../../domain/entities/AssignedRepair
 
 import style from "./index.module.css";
 import CreateInitialRepairRequestDialog from "../../components/popup";
+import type { WorkImpact } from "../../../domain/valueObjects/WorkImpact";
 
 type User = {
   id: number;
@@ -25,6 +26,7 @@ const MainPage = () => {
   const [user, setUser] = useState<User | null>(null);
 const [isCreateRequestDialogOpen, setIsCreateRequestDialogOpen] =
   useState<boolean>(false);
+  
   const [initialRepairRequestsList, setInitialRepairRequestsList] = useState<
     InitialRepairRequest[]
   >([]);
@@ -67,6 +69,18 @@ const [isCreateRequestDialogOpen, setIsCreateRequestDialogOpen] =
     navigate("/");
   };
 
+const handleCreateInitialRepairRequest = async (workImpact: WorkImpact) => {
+  try {
+    await initialRepairRequestsService.create(workImpact);
+
+    setIsCreateRequestDialogOpen(false);
+
+    console.log("Repair request created successfully");
+  } catch (error) {
+    console.log("Failed to create repair request:", error);
+  }
+};
+  
 if (isLoading) {
   return (
     <div className={style.loaderScreen}>
@@ -112,6 +126,8 @@ if (isLoading) {
       <CreateInitialRepairRequestDialog
   isOpen={isCreateRequestDialogOpen}
   onClose={() => setIsCreateRequestDialogOpen(false)}
+    onCreateRequest={handleCreateInitialRepairRequest}
+
 />
     </main>
   );
