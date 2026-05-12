@@ -153,6 +153,7 @@
   border-radius: 18px;
   background: #ffffff;
   box-shadow: 0 10px 24px rgba(50, 50, 50, 0.06);
+  cursor: pointer;
 }
 
 .listPanel > div > div + div {
