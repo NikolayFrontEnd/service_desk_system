@@ -473,4 +473,44 @@ async finishRepairTask(taskId: number) {
     technicianCurrentStatus: result.newCurrentStatus,
   };
 }
+
+async getAssignedRepairTasks() {
+  const tasks = await this.prisma.assignedRepairTask.findMany({
+    orderBy: {
+      id: 'asc',
+    },
+  });
+
+  const technicians = await this.prisma.technician.findMany();
+  const users = await this.prisma.user.findMany();
+
+  const tasksWithTechnicians = tasks.map((task) => {
+    const technician = technicians.find(
+      (item) => item.id === task.assignedTechnicianId,
+    );
+
+    const technicianUser = users.find(
+      (user) => user.id === technician?.userId,
+    );
+
+    return {
+      task: task,
+      technician: technician
+        ? {
+            id: technician.id,
+            userId: technician.userId,
+            name: technicianUser?.name ?? null,
+            specializations: technician.specializations,
+            skillLevel: technician.skillLevel,
+            currentStatus: technician.currentStatus,
+          }
+        : null,
+    };
+  });
+
+  return {
+    message: 'Assigned repair tasks loaded successfully',
+    tasks: tasksWithTechnicians,
+  };
+}
 }
