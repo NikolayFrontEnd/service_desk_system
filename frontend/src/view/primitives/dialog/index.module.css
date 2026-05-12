@@ -1,0 +1,16 @@
+.dialog {
+  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  width: 400px;
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

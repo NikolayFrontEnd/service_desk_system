@@ -13,6 +13,7 @@ import type { InitialRepairRequest } from "../../../domain/entities/InitialRepai
 import type { AssignedRepairTask } from "../../../domain/entities/AssignedRepairTask";
 
 import style from "./index.module.css";
+import CreateInitialRepairRequestDialog from "../../components/popup";
 
 type User = {
   id: number;
@@ -22,7 +23,8 @@ type User = {
 
 const MainPage = () => {
   const [user, setUser] = useState<User | null>(null);
-
+const [isCreateRequestDialogOpen, setIsCreateRequestDialogOpen] =
+  useState<boolean>(false);
   const [initialRepairRequestsList, setInitialRepairRequestsList] = useState<
     InitialRepairRequest[]
   >([]);
@@ -90,7 +92,8 @@ if (isLoading) {
 
         {user.role === "EMPLOYEE" && (
           <div className={style.actions}>
-            <Button className={style.addButton}>
+            <Button className={style.addButton}
+            onClick={() => setIsCreateRequestDialogOpen(true)}>
               Создать заявку на поломку
             </Button>
           </div>
@@ -106,6 +109,10 @@ if (isLoading) {
           </section>
         </div>
       </div>
+      <CreateInitialRepairRequestDialog
+  isOpen={isCreateRequestDialogOpen}
+  onClose={() => setIsCreateRequestDialogOpen(false)}
+/>
     </main>
   );
 };
