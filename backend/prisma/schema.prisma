@@ -53,7 +53,7 @@ model InitialRepairRequest {
 
 model AssignedRepairTask {
   id                     Int     @id @default(autoincrement())
-  originalRequestId      Int     @unique @map("originalRequestId")
+  originalRequestId      Int     @unique @map(" originalRequestId")
   department             String?
   floor                  Int?
   room                   Int?
