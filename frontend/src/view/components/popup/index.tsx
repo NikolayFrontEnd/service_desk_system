@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Dialog from "../../primitives/dialog";
 import Button from "../../primitives/button";
+import styles from "./index.module.css";
 
 type WorkImpact = "CANNOT_WORK" | "PARTIALLY_CAN_WORK" | "CAN_WAIT" | "NOT_URGENT";
 
@@ -50,8 +51,9 @@ const CreateInitialRepairRequestDialog = ({
       <div>Как поломка влияет на вашу работу?</div>
 
       {workImpactOptions.map((option) => (
-        <label key={option.value}>
+        <label className={styles.option} key={option.value}>
           <input
+            className={styles.radio}
             type="radio"
             name="workImpact"
             value={option.value}
@@ -63,7 +65,7 @@ const CreateInitialRepairRequestDialog = ({
         </label>
       ))}
 
-      <Button onClick={handleCreateRequest}>
+      <Button className={styles.submitButton} onClick={handleCreateRequest}>
        Сообщить о поломке
       </Button>
     </Dialog>

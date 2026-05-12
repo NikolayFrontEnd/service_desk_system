@@ -1,0 +1,177 @@
+:global(dialog):has(.option) {
+  width: min(460px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid rgba(124, 156, 191, 0.28);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(235, 244, 248, 0.94));
+  color: #323232;
+  box-shadow: 0 24px 70px rgba(50, 50, 50, 0.18);
+  overflow: hidden;
+}
+
+:global(dialog):has(.option)::backdrop {
+  background: rgba(50, 50, 50, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+:global(dialog):has(.option) > div:first-child {
+  gap: 16px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid rgba(124, 156, 191, 0.2);
+  background: #ffffff;
+}
+
+:global(dialog):has(.option) h2 {
+  margin: 0;
+  color: #323232;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+:global(dialog):has(.option) h2::after {
+  display: block;
+  width: 50px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: #2b78e4;
+  content: "";
+}
+
+:global(dialog):has(.option) > div:first-child button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255, 113, 113, 0.14);
+  color: #ff7171;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+:global(dialog):has(.option) > div:first-child button:hover {
+  background: rgba(255, 113, 113, 0.22);
+  transform: translateY(-1px);
+}
+
+:global(dialog):has(.option) > div:last-child {
+  padding: 22px 24px 24px;
+}
+
+:global(dialog):has(.option) > div:last-child > div:first-child {
+  margin-bottom: 16px;
+  color: #323232;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.option {
+  --option-color: #2b78e4;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 13px 15px;
+  border: 1px solid rgba(178, 184, 190, 0.42);
+  border-radius: 16px;
+  background: #ffffff;
+  color: #323232;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(50, 50, 50, 0.06);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.option:nth-of-type(1) {
+  --option-color: #ff7171;
+}
+
+.option:nth-of-type(2) {
+  --option-color: #f2ac57;
+}
+
+.option:nth-of-type(3) {
+  --option-color: #2b78e4;
+}
+
+.option:nth-of-type(4) {
+  --option-color: #14a38b;
+}
+
+.option + .option {
+  margin-top: 10px;
+}
+
+.option:hover {
+  border-color: color-mix(in srgb, var(--option-color) 55%, #ffffff);
+  box-shadow: 0 12px 26px rgba(50, 50, 50, 0.09);
+  transform: translateY(-1px);
+}
+
+.option:has(.radio:checked) {
+  border-color: var(--option-color);
+  background: color-mix(in srgb, var(--option-color) 12%, #ffffff);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--option-color) 24%, transparent);
+}
+
+.radio {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--option-color);
+  cursor: pointer;
+}
+
+.submitButton {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 18px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 16px;
+  background: #2b78e4;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 850;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(43, 120, 228, 0.24);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.submitButton:hover {
+  background: #226cce;
+  box-shadow: 0 10px 20px rgba(43, 120, 228, 0.2);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 520px) {
+  :global(dialog):has(.option) > div:first-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  :global(dialog):has(.option) > div:first-child button {
+    width: 100%;
+  }
+
+  :global(dialog):has(.option) > div:last-child {
+    padding: 20px;
+  }
+}
