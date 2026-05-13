@@ -85,4 +85,39 @@ export class UsersService {
       user: result,
     };
   }
+
+  async getMyAssignedRepairTasks(userId: number) {
+  const technician = await this.prisma.technician.findUnique({
+    where: {
+      userId: userId,
+    },
+  });
+
+  if (!technician) {
+    throw new BadRequestException('Technician profile was not found');
+  }
+
+  const tasks = await this.prisma.assignedRepairTask.findMany({
+    where: {
+      assignedTechnicianId: technician.id,
+    },
+    orderBy: {
+      id: 'asc',
+    },
+  });
+
+  return {
+    message: 'Technician assigned repair tasks loaded successfully',
+    technician: {
+      id: technician.id,
+      userId: technician.userId,
+      specializations: technician.specializations,
+      skillLevel: technician.skillLevel,
+      currentStatus: technician.currentStatus,
+      currentLoadMinutes: technician.currentLoadMinutes,
+      activeTasksCount: technician.activeTasksCount,
+    },
+    tasks: tasks,
+  };
+}
 }
