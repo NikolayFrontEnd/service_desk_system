@@ -148,20 +148,24 @@ if (isLoading) {
 
         <div className={style.listsGrid}>
           
-  {/*       {user.role === "TECHNICIAN" && (
-          <section className={`${style.listPanel} ${style.requestsPanel}`}>
-            
-          </section>
-        )} */}
+{user.role === "TECHNICIAN" ? (
+  <section className={`${style.listPanel} ${style.requestsPanel}`}>
+    aaaa
+  </section>
+) : (
+  <>
+    <section className={`${style.listPanel} ${style.requestsPanel}`}>
+      <InitialRepairRequestsList
+        requests={initialRepairRequestsList}
+        onItemClick={handleItemClick}
+      />
+    </section>
 
-
-          <section className={`${style.listPanel} ${style.requestsPanel}`}>
-            <InitialRepairRequestsList requests={initialRepairRequestsList} onItemClick  = {handleItemClick}/>
-          </section>
-
-          <section className={`${style.listPanel} ${style.tasksPanel}`}>
-            <AssignedRepairTasksList tasks={assignedRepairTasksList} />
-          </section>
+    <section className={`${style.listPanel} ${style.tasksPanel}`}>
+      <AssignedRepairTasksList tasks={assignedRepairTasksList} />
+    </section>
+  </>
+)}
 
         </div>
 

@@ -1,0 +1,153 @@
+:global(dialog):has(.content) {
+  width: min(460px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid rgba(124, 156, 191, 0.28);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #ebf4f8 100%);
+  color: #323232;
+  box-shadow: 0 24px 70px rgba(50, 50, 50, 0.18);
+  overflow: hidden;
+}
+
+:global(dialog):has(.content)::backdrop {
+  background: rgba(50, 50, 50, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+:global(dialog):has(.content) > div:first-child {
+  gap: 16px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid rgba(124, 156, 191, 0.2);
+  background: #ffffff;
+}
+
+:global(dialog):has(.content) h2 {
+  margin: 0;
+  color: #323232;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+:global(dialog):has(.content) h2::after {
+  display: block;
+  width: 50px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: #14a38b;
+  content: "";
+}
+
+:global(dialog):has(.content) > div:first-child button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255, 113, 113, 0.14);
+  color: #ff7171;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+:global(dialog):has(.content) > div:first-child button:hover {
+  background: rgba(255, 113, 113, 0.22);
+  transform: translateY(-1px);
+}
+
+:global(dialog):has(.content) > div:last-child {
+  padding: 24px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  color: #323232;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.select {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 44px 0 16px;
+  border: 1px solid rgba(178, 184, 190, 0.58);
+  border-radius: 16px;
+  background:
+    linear-gradient(45deg, transparent 50%, #756f86 50%) calc(100% - 23px) 50% / 7px 7px no-repeat,
+    linear-gradient(135deg, #756f86 50%, transparent 50%) calc(100% - 17px) 50% / 7px 7px no-repeat,
+    #ffffff;
+  color: #323232;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 10px 24px rgba(50, 50, 50, 0.06);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.select:hover {
+  border-color: rgba(43, 120, 228, 0.48);
+  box-shadow: 0 12px 26px rgba(50, 50, 50, 0.09);
+}
+
+.select:focus {
+  border-color: #2b78e4;
+  box-shadow:
+    0 0 0 4px rgba(43, 120, 228, 0.14),
+    0 12px 26px rgba(50, 50, 50, 0.09);
+}
+
+.submitButton {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 8px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 16px;
+  background: #2b78e4;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 850;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(43, 120, 228, 0.24);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.submitButton:hover {
+  background: #226cce;
+  box-shadow: 0 10px 20px rgba(43, 120, 228, 0.2);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 520px) {
+  :global(dialog):has(.content) > div:first-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  :global(dialog):has(.content) > div:first-child button {
+    width: 100%;
+  }
+
+  :global(dialog):has(.content) > div:last-child {
+    padding: 20px;
+  }
+}
