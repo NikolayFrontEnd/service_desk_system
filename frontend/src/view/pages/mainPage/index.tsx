@@ -81,6 +81,10 @@ const handleCreateInitialRepairRequest = async (workImpact: WorkImpact) => {
   }
 };
   
+const handleItemClick = (id: number) => {
+  console.log(`Clicked on request with ID: ${id}`);
+};
+
 if (isLoading) {
   return (
     <div className={style.loaderScreen}>
@@ -115,7 +119,7 @@ if (isLoading) {
 
         <div className={style.listsGrid}>
           <section className={`${style.listPanel} ${style.requestsPanel}`}>
-            <InitialRepairRequestsList requests={initialRepairRequestsList} />
+            <InitialRepairRequestsList requests={initialRepairRequestsList} onItemClick  = {handleItemClick}/>
           </section>
 
           <section className={`${style.listPanel} ${style.tasksPanel}`}>

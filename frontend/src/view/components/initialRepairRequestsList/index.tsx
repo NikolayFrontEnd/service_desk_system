@@ -3,12 +3,12 @@ import styles from "./index.module.css";
 
 type InitialRepairRequestsListProps = {
   requests: InitialRepairRequest[];
-  onRequestClick: (id: number) => void;
+  onItemClick: (id: number) => void;
 };
 
 const InitialRepairRequestsList = ({
   requests,
-  onRequestClick,
+  onItemClick,
 }: InitialRepairRequestsListProps) => {
   return (
     <div>
@@ -18,7 +18,7 @@ const InitialRepairRequestsList = ({
         <div
           className={styles.listItem}
           key={request.id}
-          onClick={() => onRequestClick(request.id)}
+          onClick={() => onItemClick(request.id)}
         >
           <p>Отдел: {request.department}</p>
           <p>Этаж: {request.floor}</p>
