@@ -15,6 +15,7 @@ import type { AssignedRepairTask } from "../../../domain/entities/AssignedRepair
 import style from "./index.module.css";
 import CreateInitialRepairRequestDialog from "../../components/popup";
 import type { WorkImpact } from "../../../domain/valueObjects/WorkImpact";
+import SelectFaultTitleDialog from "../../components/selectFailtFialog";
 
 type User = {
   id: number;
@@ -26,7 +27,8 @@ const MainPage = () => {
   const [user, setUser] = useState<User | null>(null);
 const [isCreateRequestDialogOpen, setIsCreateRequestDialogOpen] =
   useState<boolean>(false);
-  
+  const [isFaultTitleDialogOpen, setIsFaultTitleDialogOpen] =
+  useState<boolean>(false);
   const [initialRepairRequestsList, setInitialRepairRequestsList] = useState<
     InitialRepairRequest[]
   >([]);
@@ -83,8 +85,12 @@ const handleCreateInitialRepairRequest = async (workImpact: WorkImpact) => {
   
 const handleItemClick = (id: number) => {
   console.log(`Clicked on request with ID: ${id}`);
+  setIsFaultTitleDialogOpen(true);
 };
 
+const handleSelectFaultTitle = () =>{
+  
+}
 if (isLoading) {
   return (
     <div className={style.loaderScreen}>
@@ -118,6 +124,14 @@ if (isLoading) {
         )}
 
         <div className={style.listsGrid}>
+          
+  {/*       {user.role === "TECHNICIAN" && (
+          <section className={`${style.listPanel} ${style.requestsPanel}`}>
+            
+          </section>
+        )} */}
+
+
           <section className={`${style.listPanel} ${style.requestsPanel}`}>
             <InitialRepairRequestsList requests={initialRepairRequestsList} onItemClick  = {handleItemClick}/>
           </section>
@@ -125,7 +139,11 @@ if (isLoading) {
           <section className={`${style.listPanel} ${style.tasksPanel}`}>
             <AssignedRepairTasksList tasks={assignedRepairTasksList} />
           </section>
+
         </div>
+
+
+        
       </div>
       <CreateInitialRepairRequestDialog
   isOpen={isCreateRequestDialogOpen}
@@ -133,6 +151,11 @@ if (isLoading) {
     onCreateRequest={handleCreateInitialRepairRequest}
 
 />
+      <SelectFaultTitleDialog
+        isOpen={isFaultTitleDialogOpen}
+        onClose={() => setIsFaultTitleDialogOpen(false)}
+        onSelectFaultTitle={handleSelectFaultTitle}
+      />
     </main>
   );
 };
