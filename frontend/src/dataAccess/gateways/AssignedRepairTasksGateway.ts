@@ -2,6 +2,8 @@ import axios from "axios";
 import type { AssignedRepairTasksResponseDto } from "../dtos/AssignedRepairTasksDto";
 import { AssignedRepairTask } from "../../domain/entities/AssignedRepairTask";
 import { Technician } from "../../domain/entities/Technician";
+import type { CreateAssignedRepairTaskRequestDto, CreateAssignedRepairTaskResponseDto } from "../dtos/CreateAssignedRepairTaskDto";
+import type { FaultTitle } from "../../domain/valueObjects/FaultDialog";
 
 export class AssignedRepairTasksGateway {
   private readonly API_BASE_URL = "http://localhost:3000";
@@ -50,6 +52,32 @@ export class AssignedRepairTasksGateway {
     } catch {
       throw new Error("Failed to load assigned repair tasks");
     }
+    
+  }
+  async create(
+    originalRequestId: number,
+    faultTitle: FaultTitle
+  ): Promise<void> {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+
+    const body: CreateAssignedRepairTaskRequestDto = {
+      originalRequestId,
+      faultTitle,
+    };
+
+    await axios.post<CreateAssignedRepairTaskResponseDto>(
+      `${this.API_BASE_URL}/assigned-repair-tasks`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   }
 }
 
