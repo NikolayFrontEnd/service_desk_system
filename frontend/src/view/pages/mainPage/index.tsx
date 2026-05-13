@@ -16,6 +16,7 @@ import style from "./index.module.css";
 import CreateInitialRepairRequestDialog from "../../components/popup";
 import type { WorkImpact } from "../../../domain/valueObjects/WorkImpact";
 import SelectFaultTitleDialog from "../../components/selectFailtFialog";
+import type { FaultTitle } from "../../../domain/valueObjects/FaultDialog";
 
 type User = {
   id: number;
@@ -38,7 +39,8 @@ const [isCreateRequestDialogOpen, setIsCreateRequestDialogOpen] =
   >([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+const [selectedInitialRequestId, setSelectedInitialRequestId] =
+  useState<number | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,13 +86,34 @@ const handleCreateInitialRepairRequest = async (workImpact: WorkImpact) => {
 };
   
 const handleItemClick = (id: number) => {
-  console.log(`Clicked on request with ID: ${id}`);
+  setSelectedInitialRequestId(id);
   setIsFaultTitleDialogOpen(true);
 };
 
-const handleSelectFaultTitle = () =>{
-  
-}
+const handleSelectFaultTitle = async (faultTitle: FaultTitle) => {
+  if (!selectedInitialRequestId) {
+    console.log("No request selected");
+    return;
+  }
+
+  try {
+    await assignedRepairTasksService.create(
+      selectedInitialRequestId,
+      faultTitle
+    );
+
+    setIsFaultTitleDialogOpen(false);
+    setSelectedInitialRequestId(null);
+
+    const initialRequests = await initialRepairRequestsService.getAll();
+    const assignedTasks = await assignedRepairTasksService.getAll();
+
+    setInitialRepairRequestsList(initialRequests);
+    setAssignedRepairTasksList(assignedTasks);
+  } catch (error) {
+    console.log("Failed to assign repair task:", error);
+  }
+};
 if (isLoading) {
   return (
     <div className={style.loaderScreen}>
