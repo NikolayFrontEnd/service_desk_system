@@ -1,24 +1,29 @@
 import type { InitialRepairRequest } from "../../../domain/entities/InitialRepairRequest";
+import styles from "./index.module.css";
 
 type InitialRepairRequestsListProps = {
   requests: InitialRepairRequest[];
+  onRequestClick: (id: number) => void;
 };
 
 const InitialRepairRequestsList = ({
   requests,
+  onRequestClick,
 }: InitialRepairRequestsListProps) => {
   return (
     <div>
-      <h2>Initial repair requests</h2>
+      <h2>Первичные заявки о поломках</h2>
 
       {requests.map((request) => (
-        <div key={request.id}>
-          <p>ID: {request.id}</p>
-          <p>Department: {request.department}</p>
-          <p>Floor: {request.floor}</p>
-          <p>Room: {request.room}</p>
-          <p>Work impact: {request.workImpact}</p>
-
+        <div
+          className={styles.listItem}
+          key={request.id}
+          onClick={() => onRequestClick(request.id)}
+        >
+          <p>Отдел: {request.department}</p>
+          <p>Этаж: {request.floor}</p>
+          <p>Комната: {request.room}</p>
+          <p>Влияние на работу: {request.workImpact}</p>
           <hr />
         </div>
       ))}
