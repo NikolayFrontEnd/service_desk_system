@@ -2,10 +2,13 @@ import type { TechnicianAssignedRepairTask } from "../../../domain/entities/Tech
 
 type TechnicianTasksListProps = {
   tasks: TechnicianAssignedRepairTask[];
-   onItemClick: (id: number) => void;
+  onItemClick: (id: number) => void;
 };
 
-const TechnicianTasksList = ({ tasks, onItemClick  }: TechnicianTasksListProps) => {
+const TechnicianTasksList = ({
+  tasks,
+  onItemClick,
+}: TechnicianTasksListProps) => {
   return (
     <div>
       <h2>My assigned repair tasks</h2>
@@ -13,7 +16,7 @@ const TechnicianTasksList = ({ tasks, onItemClick  }: TechnicianTasksListProps) 
       {tasks.length === 0 && <p>You have no assigned tasks.</p>}
 
       {tasks.map((task) => (
-        <div key={task.id} onClick={() => onItemClick(task.id)  }>
+        <div key={task.id} onClick={() => onItemClick(task.id)}>
           <h3>{task.faultTypeCode}</h3>
 
           <p>Task ID: {task.id}</p>
