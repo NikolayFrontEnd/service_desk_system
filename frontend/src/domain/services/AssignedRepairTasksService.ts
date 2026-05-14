@@ -12,6 +12,15 @@ export class AssignedRepairTasksService {
   ): Promise<void> {
     return assignedRepairTasksGateway.create(originalRequestId, faultTitle);
   }
+async startTask(taskId: number): Promise<void> {
+  return assignedRepairTasksGateway.startTask(taskId);
+}
+
+async finishTask(taskId: number): Promise<void> {
+  return assignedRepairTasksGateway.finishTask(taskId);
+}
+
+
 }
 
 export const assignedRepairTasksService = new AssignedRepairTasksService();
