@@ -76,6 +76,7 @@ export const faultTypeLabels: Record<string, string> = {
   KEYBOARD_NOT_WORKING: "Не работает клавиатура",
   MOUSE_TOUCHPAD_NOT_WORKING: "Не работает мышь или тачпад",
   EXTERNAL_DEVICE_NOT_DETECTED: "Не определяется внешнее устройство",
+  WIFI_CONNECTION_ISSUE: "Проблема с подключением к Wi-Fi",
 };
 
 export const getLabel = (
