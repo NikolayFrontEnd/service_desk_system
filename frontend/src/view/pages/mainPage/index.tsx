@@ -187,7 +187,9 @@ const MainPage = () => {
         <div className={style.listsGrid}>
           {user.role === "TECHNICIAN" ? (
             <section className={`${style.listPanel} ${style.requestsPanel}`}>
-              <TechnicianTasksList tasks={technicianTasksList} />
+              <TechnicianTasksList tasks={technicianTasksList}
+               onItemClick={handleItemClick}
+              />
             </section>
           ) : (
             <>
@@ -221,8 +223,9 @@ const MainPage = () => {
         onSelectFaultTitle={handleSelectFaultTitle}
       />
 
-      <UpdateRepairTaskStatusDialog />
-
+       <UpdateRepairTaskStatusDialog 
+      />
+ 
     </main>
   );
 };

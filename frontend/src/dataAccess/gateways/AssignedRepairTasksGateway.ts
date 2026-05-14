@@ -78,7 +78,43 @@ export class AssignedRepairTasksGateway {
         },
       }
     );
+    
   }
+
+  async startTask(taskId: number): Promise<void> {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (!accessToken) {
+    throw new Error("Access token not found");
+  }
+
+  await axios.patch(
+    `${this.API_BASE_URL}/assigned-repair-tasks/${taskId}/start`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+}
+
+async finishTask(taskId: number): Promise<void> {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (!accessToken) {
+    throw new Error("Access token not found");
+  }
+
+  await axios.delete(
+    `${this.API_BASE_URL}/assigned-repair-tasks/${taskId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+}
 }
 
 export const assignedRepairTasksGateway = new AssignedRepairTasksGateway();
