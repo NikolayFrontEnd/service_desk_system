@@ -13,8 +13,7 @@ const AssignedRepairTasksList = ({ tasks }: AssignedRepairTasksListProps) => {
         <div key={task.id}>
           <h3>{task.faultTypeCode}</h3>
 
-          <p>Task ID: {task.id}</p>
-          <p>Original request ID: {task.originalRequestId}</p>
+
           <p>Department: {task.department}</p>
           <p>Floor: {task.floor}</p>
           <p>Room: {task.room}</p>
