@@ -1,4 +1,11 @@
 import type { TechnicianAssignedRepairTask } from "../../../domain/entities/TechnicianAssignedRepairTask";
+import {
+  categoryLabels,
+  priorityLabels,
+  taskStatusLabels,
+  faultTypeLabels,
+  getLabel,
+} from "../../../domain/valueObjects/RepairTaskLabels";
 
 type TechnicianTasksListProps = {
   tasks: TechnicianAssignedRepairTask[];
@@ -11,24 +18,24 @@ const TechnicianTasksList = ({
 }: TechnicianTasksListProps) => {
   return (
     <div>
-      <h2>My assigned repair tasks</h2>
+      <h2>Мои ремонтные задачи</h2>
 
-      {tasks.length === 0 && <p>You have no assigned tasks.</p>}
+      {tasks.length === 0 && <p>У вас нет назначенных задач.</p>}
 
       {tasks.map((task) => (
         <div key={task.id} onClick={() => onItemClick(task.id)}>
-          <h3>{task.faultTypeCode}</h3>
+          <h3>{getLabel(faultTypeLabels, task.faultTypeCode)}</h3>
 
-          <p>Task ID: {task.id}</p>
-          <p>Original request ID: {task.originalRequestId}</p>
-          <p>Department: {task.department}</p>
-          <p>Floor: {task.floor}</p>
-          <p>Room: {task.room}</p>
-          <p>Category: {task.category}</p>
-          <p>Complexity: {task.complexityLevel}</p>
-          <p>Estimated repair time: {task.estimatedRepairMinutes} minutes</p>
-          <p>Priority: {task.priority}</p>
-          <p>Status: {task.status}</p>
+          <p>Номер задачи: {task.id}</p>
+          <p>Номер исходной заявки: {task.originalRequestId}</p>
+          <p>Отдел: {task.department}</p>
+          <p>Этаж: {task.floor}</p>
+          <p>Кабинет: {task.room}</p>
+          <p>Категория: {getLabel(categoryLabels, task.category)}</p>
+          <p>Сложность: {task.complexityLevel}</p>
+          <p>Примерное время ремонта: {task.estimatedRepairMinutes} минут</p>
+          <p>Приоритет: {getLabel(priorityLabels, task.priority)}</p>
+          <p>Статус: {getLabel(taskStatusLabels, task.status)}</p>
 
           <hr />
         </div>
