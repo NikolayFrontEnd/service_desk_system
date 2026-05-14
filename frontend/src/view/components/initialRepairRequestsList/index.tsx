@@ -1,5 +1,8 @@
 import type { InitialRepairRequest } from "../../../domain/entities/InitialRepairRequest";
-import styles from "./index.module.css";
+import {
+  getLabel,
+  workImpactLabels,
+} from "../../../domain/valueObjects/RepairTaskLabels";
 
 type InitialRepairRequestsListProps = {
   requests: InitialRepairRequest[];
@@ -15,15 +18,15 @@ const InitialRepairRequestsList = ({
       <h2>Первичные заявки о поломках</h2>
 
       {requests.map((request) => (
-        <div
-          className={styles.listItem}
-          key={request.id}
-          onClick={() => onItemClick(request.id)}
-        >
+        <div key={request.id} onClick={() => onItemClick(request.id)}>
           <p>Отдел: {request.department}</p>
           <p>Этаж: {request.floor}</p>
-          <p>Комната: {request.room}</p>
-          <p>Влияние на работу: {request.workImpact}</p>
+          <p>Кабинет: {request.room}</p>
+          <p>
+            Влияние на работу:{" "}
+            {getLabel(workImpactLabels, request.workImpact)}
+          </p>
+
           <hr />
         </div>
       ))}
