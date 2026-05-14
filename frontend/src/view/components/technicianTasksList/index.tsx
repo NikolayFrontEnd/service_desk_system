@@ -1,7 +1,15 @@
-const technicianTasksList = ({ tasks } : ) =>{
-    return(
-         <div>
-      <h2>Assigned repair tasks</h2>
+import type { TechnicianAssignedRepairTask } from "../../../domain/entities/TechnicianAssignedRepairTask";
+
+type TechnicianTasksListProps = {
+  tasks: TechnicianAssignedRepairTask[];
+};
+
+const TechnicianTasksList = ({ tasks }: TechnicianTasksListProps) => {
+  return (
+    <div>
+      <h2>My assigned repair tasks</h2>
+
+      {tasks.length === 0 && <p>You have no assigned tasks.</p>}
 
       {tasks.map((task) => (
         <div key={task.id}>
@@ -18,15 +26,11 @@ const technicianTasksList = ({ tasks } : ) =>{
           <p>Priority: {task.priority}</p>
           <p>Status: {task.status}</p>
 
-          <h4>Technician</h4>
-          <p>Name: {task.technician.name}</p>
-          <p>Specializations: {task.technician.specializations}</p>
-          <p>Skill level: {task.technician.skillLevel}</p>
-          <p>Status: {task.technician.currentStatus}</p>
-
           <hr />
         </div>
       ))}
     </div>
-    )
-}
+  );
+};
+
+export default TechnicianTasksList;
