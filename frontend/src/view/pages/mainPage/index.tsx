@@ -55,6 +55,12 @@ const MainPage = () => {
   const [selectedInitialRequestId, setSelectedInitialRequestId] =
     useState<number | null>(null);
 
+const [isUpdateTaskStatusDialogOpen, setIsUpdateTaskStatusDialogOpen] =
+  useState<boolean>(false);
+
+const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
+  useState<number | null>(null);
+
   const navigate = useNavigate();
 
   const loadPageData = async (role: string) => {
@@ -150,6 +156,55 @@ const MainPage = () => {
     }
   };
 
+const handleTechnicianTaskClick = (id: number) => {
+  setSelectedTechnicianTaskId(id);
+  setIsUpdateTaskStatusDialogOpen(true);
+};
+
+const handleStartTechnicianTask = async () => {
+  if (!user) {
+    return;
+  }
+
+  if (selectedTechnicianTaskId === null) {
+    console.log("No technician task selected");
+    return;
+  }
+
+  try {
+    await assignedRepairTasksService.startTask(selectedTechnicianTaskId);
+
+    setIsUpdateTaskStatusDialogOpen(false);
+    setSelectedTechnicianTaskId(null);
+
+    await loadPageData(user.role);
+  } catch (error) {
+    console.log("Failed to start repair task:", error);
+  }
+};
+
+const handleFinishTechnicianTask = async () => {
+  if (!user) {
+    return;
+  }
+
+  if (selectedTechnicianTaskId === null) {
+    console.log("No technician task selected");
+    return;
+  }
+
+  try {
+    await assignedRepairTasksService.finishTask(selectedTechnicianTaskId);
+
+    setIsUpdateTaskStatusDialogOpen(false);
+    setSelectedTechnicianTaskId(null);
+
+    await loadPageData(user.role);
+  } catch (error) {
+    console.log("Failed to finish repair task:", error);
+  }
+};
+
   if (isLoading) {
     return (
       <div className={style.loaderScreen}>
@@ -187,9 +242,10 @@ const MainPage = () => {
         <div className={style.listsGrid}>
           {user.role === "TECHNICIAN" ? (
             <section className={`${style.listPanel} ${style.requestsPanel}`}>
-              <TechnicianTasksList tasks={technicianTasksList}
-               onItemClick={handleItemClick}
-              />
+<TechnicianTasksList
+  tasks={technicianTasksList}
+  onItemClick={handleTechnicianTaskClick}
+/>
             </section>
           ) : (
             <>
@@ -223,8 +279,15 @@ const MainPage = () => {
         onSelectFaultTitle={handleSelectFaultTitle}
       />
 
-       <UpdateRepairTaskStatusDialog 
-      />
+    <UpdateRepairTaskStatusDialog
+  isOpen={isUpdateTaskStatusDialogOpen}
+  onClose={() => {
+    setIsUpdateTaskStatusDialogOpen(false);
+    setSelectedTechnicianTaskId(null);
+  }}
+  onStartTask={handleStartTechnicianTask}
+  onFinishTask={handleFinishTechnicianTask}
+/>
  
     </main>
   );

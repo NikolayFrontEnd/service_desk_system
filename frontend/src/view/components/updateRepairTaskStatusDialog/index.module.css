@@ -1,0 +1,129 @@
+.content {
+  display: grid;
+  gap: 12px;
+}
+
+:global(dialog):has(.content) {
+  width: min(440px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid rgba(124, 156, 191, 0.28);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #ebf4f8 100%);
+  color: #323232;
+  box-shadow: 0 24px 70px rgba(50, 50, 50, 0.18);
+  overflow: hidden;
+}
+
+:global(dialog):has(.content)::backdrop {
+  background: rgba(50, 50, 50, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+:global(dialog):has(.content) > div:first-child {
+  gap: 16px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid rgba(124, 156, 191, 0.2);
+  background: #ffffff;
+}
+
+:global(dialog):has(.content) h2 {
+  margin: 0;
+  color: #323232;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+:global(dialog):has(.content) h2::after {
+  display: block;
+  width: 50px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: #2b78e4;
+  content: "";
+}
+
+:global(dialog):has(.content) > div:first-child button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255, 113, 113, 0.14);
+  color: #ff7171;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+:global(dialog):has(.content) > div:first-child button:hover {
+  background: rgba(255, 113, 113, 0.22);
+  transform: translateY(-1px);
+}
+
+:global(dialog):has(.content) > div:last-child {
+  padding: 24px;
+}
+
+.content button {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 16px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(43, 120, 228, 0.18);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.content button:first-child {
+  background: #2b78e4;
+  box-shadow: 0 14px 28px rgba(43, 120, 228, 0.24);
+}
+
+.content button:first-child:hover {
+  background: #226cce;
+  box-shadow: 0 10px 20px rgba(43, 120, 228, 0.2);
+  transform: translateY(-1px);
+}
+
+.content button:last-child {
+  background: #14a38b;
+  box-shadow: 0 14px 28px rgba(20, 163, 139, 0.24);
+}
+
+.content button:last-child:hover {
+  background: #108f7a;
+  box-shadow: 0 10px 20px rgba(20, 163, 139, 0.2);
+  transform: translateY(-1px);
+}
+
+:global(dialog):has(.content) button:focus-visible {
+  outline: 4px solid rgba(43, 120, 228, 0.18);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  :global(dialog):has(.content) > div:first-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  :global(dialog):has(.content) > div:first-child button {
+    width: 100%;
+  }
+
+  :global(dialog):has(.content) > div:last-child {
+    padding: 20px;
+  }
+}
