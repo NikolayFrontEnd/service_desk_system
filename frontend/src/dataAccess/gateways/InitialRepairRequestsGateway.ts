@@ -1,7 +1,10 @@
 import axios from "axios";
 import type { InitialRepairRequestsResponseDto } from "../dtos/InitialRepairRequestsDto";
 import { InitialRepairRequest } from "../../domain/entities/InitialRepairRequest";
-import type { CreateInitialRepairRequestRequestDto, CreateInitialRepairRequestResponseDto } from "../dtos/CreateInitialRepairRequestDto";
+import type {
+  CreateInitialRepairRequestRequestDto,
+  CreateInitialRepairRequestResponseDto,
+} from "../dtos/CreateInitialRepairRequestDto";
 import type { WorkImpact } from "../../domain/valueObjects/WorkImpact";
 
 export class InitialRepairRequestsGateway {
@@ -35,7 +38,7 @@ export class InitialRepairRequestsGateway {
     }
   }
 
-    async create(workImpact: WorkImpact): Promise<void> {
+  async create(workImpact: WorkImpact): Promise<void> {
     const accessToken = localStorage.getItem("accessToken");
 
     if (!accessToken) {

@@ -1,7 +1,5 @@
-import type { WorkImpact } from "../../domain/valueObjects/WorkImpact";
-
 export type CreateInitialRepairRequestRequestDto = {
-  workImpact: WorkImpact;
+  workImpact: string;
 };
 
 export type CreateInitialRepairRequestResponseDto = {

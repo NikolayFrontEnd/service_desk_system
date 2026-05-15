@@ -7,7 +7,7 @@ export class InitialRepairRequestsService {
     return initialRepairRequestsGateway.getAll();
   }
 
-   async create(workImpact: WorkImpact): Promise<void> {
+  async create(workImpact: WorkImpact): Promise<void> {
     return initialRepairRequestsGateway.create(workImpact);
   }
 }

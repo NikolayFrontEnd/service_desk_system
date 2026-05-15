@@ -2,8 +2,10 @@ import { useState } from "react";
 import Dialog from "../../primitives/dialog";
 import Button from "../../primitives/button";
 import styles from "./index.module.css";
-import { faultTitleOptions, type FaultTitle } from "../../../domain/valueObjects/FaultDialog";
-
+import {
+  faultTitleOptions,
+  type FaultTitle,
+} from "../../../domain/valueObjects/FaultTitle";
 
 type SelectFaultTitleDialogProps = {
   isOpen: boolean;
@@ -30,7 +32,11 @@ const SelectFaultTitleDialog = ({
   };
 
   return (
-    <Dialog isOpen={isOpen} title="Выберите тип поломки" onClose={onClose}>
+    <Dialog
+      isOpen={isOpen}
+      title="Выберите тип поломки"
+      onClose={onClose}
+    >
       <div className={styles.content}>
         <label htmlFor="faultTitle" className={styles.label}>
           Какая проблема возникла?

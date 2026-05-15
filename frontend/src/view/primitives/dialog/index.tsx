@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import styles from "./index.module.css";
 import Button from "../button";
 
 type DialogProps = {
   isOpen: boolean;
   title?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   onClose: () => void;
 };
 

@@ -5,17 +5,17 @@ import style from "./index.module.css";
 type SignInFormProps = {
   email: string;
   password: string;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  handleSignIn: () => void;
+  onEmailChange: (email: string) => void;
+  onPasswordChange: (password: string) => void;
+  onSignIn: () => void;
 };
 
 const SignInForm = ({
   email,
   password,
-  setEmail,
-  setPassword,
-  handleSignIn,
+  onEmailChange,
+  onPasswordChange,
+  onSignIn,
 }: SignInFormProps) => {
   return (
     <div className={style.signInForm}>
@@ -28,7 +28,7 @@ const SignInForm = ({
         value={email}
         placeholder="Enter your email"
         onChange={(e) => {
-          setEmail(e.target.value);
+          onEmailChange(e.target.value);
         }}
       />
 
@@ -39,11 +39,11 @@ const SignInForm = ({
         value={password}
         placeholder="Enter your password"
         onChange={(e) => {
-          setPassword(e.target.value);
+          onPasswordChange(e.target.value);
         }}
       />
 
-      <Button className={style.button} onClick={handleSignIn}>
+      <Button className={style.button} onClick={onSignIn}>
         Вход
       </Button>
     </div>

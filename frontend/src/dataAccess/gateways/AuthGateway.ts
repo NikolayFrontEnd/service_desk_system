@@ -2,7 +2,7 @@ import axios from "axios";
 import type { LoginResponseDto } from "../dtos/AuthDto";
 import { User } from "../../domain/entities/User";
 import { AccessToken } from "../../domain/valueObjects/AccessToken";
-import  { AuthSession } from "../../domain/entities/AuthSession";
+import { AuthSession } from "../../domain/entities/AuthSession";
 
 export class AuthGateway {
   private readonly API_BASE_URL = "http://localhost:3000";
@@ -19,11 +19,7 @@ export class AuthGateway {
 
       const accessToken = new AccessToken(data.accessToken);
 
-      const user = new User(
-        data.user.id,
-        data.user.name,
-        data.user.role
-      );
+      const user = new User(data.user.id, data.user.name, data.user.role);
 
       return new AuthSession(accessToken, user);
     } catch {

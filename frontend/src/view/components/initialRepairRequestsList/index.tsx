@@ -6,19 +6,19 @@ import {
 
 type InitialRepairRequestsListProps = {
   requests: InitialRepairRequest[];
-  onItemClick: (id: number) => void;
+  onRequestClick: (id: number) => void;
 };
 
 const InitialRepairRequestsList = ({
   requests,
-  onItemClick,
+  onRequestClick,
 }: InitialRepairRequestsListProps) => {
   return (
     <div>
       <h2>Первичные заявки о поломках</h2>
 
       {requests.map((request) => (
-        <div key={request.id} onClick={() => onItemClick(request.id)}>
+        <div key={request.id} onClick={() => onRequestClick(request.id)}>
           <p>Отдел: {request.department}</p>
           <p>Этаж: {request.floor}</p>
           <p>Кабинет: {request.room}</p>

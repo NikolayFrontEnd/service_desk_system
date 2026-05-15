@@ -5,10 +5,10 @@ import style from "./index.module.css";
 type UserHeaderProps = {
   name: string;
   role: string;
-  handleSignOut: () => void;
+  onSignOut: () => void;
 };
 
-const UserHeader = ({ name, role, handleSignOut }: UserHeaderProps) => {
+const UserHeader = ({ name, role, onSignOut }: UserHeaderProps) => {
   return (
     <div className={style.userHeader}>
       <div>
@@ -16,7 +16,7 @@ const UserHeader = ({ name, role, handleSignOut }: UserHeaderProps) => {
         <p>{getUserRoleLabel(role)}</p>
       </div>
 
-      <Button className={style.button} onClick={handleSignOut}>
+      <Button className={style.button} onClick={onSignOut}>
         Выход
       </Button>
     </div>

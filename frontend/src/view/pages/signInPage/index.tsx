@@ -37,9 +37,9 @@ const SignInPage = () => {
       <SignInForm
         email={email}
         password={password}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        handleSignIn={handleSignIn}
+        onEmailChange={setEmail}
+        onPasswordChange={setPassword}
+        onSignIn={handleSignIn}
       />
     </div>
   );

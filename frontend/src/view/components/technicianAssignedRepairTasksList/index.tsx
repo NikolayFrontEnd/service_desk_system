@@ -7,15 +7,15 @@ import {
   getLabel,
 } from "../../../domain/valueObjects/RepairTaskLabels";
 
-type TechnicianTasksListProps = {
+type TechnicianAssignedRepairTasksListProps = {
   tasks: TechnicianAssignedRepairTask[];
-  onItemClick: (id: number) => void;
+  onTaskClick: (id: number) => void;
 };
 
-const TechnicianTasksList = ({
+const TechnicianAssignedRepairTasksList = ({
   tasks,
-  onItemClick,
-}: TechnicianTasksListProps) => {
+  onTaskClick,
+}: TechnicianAssignedRepairTasksListProps) => {
   return (
     <div>
       <h2>Мои ремонтные задачи</h2>
@@ -23,7 +23,7 @@ const TechnicianTasksList = ({
       {tasks.length === 0 && <p>У вас нет назначенных задач.</p>}
 
       {tasks.map((task) => (
-        <div key={task.id} onClick={() => onItemClick(task.id)}>
+        <div key={task.id} onClick={() => onTaskClick(task.id)}>
           <h3>{getLabel(faultTypeLabels, task.faultTypeCode)}</h3>
 
           <p>Номер задачи: {task.id}</p>
@@ -44,4 +44,4 @@ const TechnicianTasksList = ({
   );
 };
 
-export default TechnicianTasksList;
+export default TechnicianAssignedRepairTasksList;

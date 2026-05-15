@@ -2,8 +2,11 @@ import axios from "axios";
 import type { AssignedRepairTasksResponseDto } from "../dtos/AssignedRepairTasksDto";
 import { AssignedRepairTask } from "../../domain/entities/AssignedRepairTask";
 import { Technician } from "../../domain/entities/Technician";
-import type { CreateAssignedRepairTaskRequestDto, CreateAssignedRepairTaskResponseDto } from "../dtos/CreateAssignedRepairTaskDto";
-import type { FaultTitle } from "../../domain/valueObjects/FaultDialog";
+import type {
+  CreateAssignedRepairTaskRequestDto,
+  CreateAssignedRepairTaskResponseDto,
+} from "../dtos/CreateAssignedRepairTaskDto";
+import type { FaultTitle } from "../../domain/valueObjects/FaultTitle";
 
 export class AssignedRepairTasksGateway {
   private readonly API_BASE_URL = "http://localhost:3000";
@@ -52,8 +55,8 @@ export class AssignedRepairTasksGateway {
     } catch {
       throw new Error("Failed to load assigned repair tasks");
     }
-    
   }
+
   async create(
     originalRequestId: number,
     faultTitle: FaultTitle
@@ -78,43 +81,39 @@ export class AssignedRepairTasksGateway {
         },
       }
     );
-    
   }
 
   async startTask(taskId: number): Promise<void> {
-  const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
 
-  if (!accessToken) {
-    throw new Error("Access token not found");
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+
+    await axios.patch(
+      `${this.API_BASE_URL}/assigned-repair-tasks/${taskId}/start`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   }
 
-  await axios.patch(
-    `${this.API_BASE_URL}/assigned-repair-tasks/${taskId}/start`,
-    {},
-    {
+  async finishTask(taskId: number): Promise<void> {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+
+    await axios.delete(`${this.API_BASE_URL}/assigned-repair-tasks/${taskId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
-  );
-}
-
-async finishTask(taskId: number): Promise<void> {
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) {
-    throw new Error("Access token not found");
+    });
   }
-
-  await axios.delete(
-    `${this.API_BASE_URL}/assigned-repair-tasks/${taskId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-}
 }
 
 export const assignedRepairTasksGateway = new AssignedRepairTasksGateway();

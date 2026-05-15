@@ -1,3 +1,4 @@
+import type { ChangeEvent } from "react";
 import styles from "./index.module.css";
 
 type InputProps = {
@@ -6,7 +7,7 @@ type InputProps = {
   type?: "text" | "email" | "password" | "number";
   value?: string;
   placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 
   className?: string;
   labelClassName?: string;

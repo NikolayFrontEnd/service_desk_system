@@ -5,9 +5,10 @@ import UserHeader from "../../components/userHeader";
 import Button from "../../primitives/button";
 import InitialRepairRequestsList from "../../components/initialRepairRequestsList";
 import AssignedRepairTasksList from "../../components/assignedRepairTasksList";
-import CreateInitialRepairRequestDialog from "../../components/popup";
-import SelectFaultTitleDialog from "../../components/selectFailtFialog";
-import TechnicianTasksList from "../../components/technicianTasksList";
+import CreateInitialRepairRequestDialog from "../../components/createInitialRepairRequestDialog";
+import SelectFaultTitleDialog from "../../components/selectFaultTitleDialog";
+import TechnicianAssignedRepairTasksList from "../../components/technicianAssignedRepairTasksList";
+import UpdateRepairTaskStatusDialog from "../../components/updateRepairTaskStatusDialog";
 
 import { initialRepairRequestsService } from "../../../domain/services/InitialRepairRequestsService";
 import { assignedRepairTasksService } from "../../../domain/services/AssignedRepairTasksService";
@@ -18,10 +19,9 @@ import type { AssignedRepairTask } from "../../../domain/entities/AssignedRepair
 import type { TechnicianAssignedRepairTask } from "../../../domain/entities/TechnicianAssignedRepairTask";
 
 import type { WorkImpact } from "../../../domain/valueObjects/WorkImpact";
-import type { FaultTitle } from "../../../domain/valueObjects/FaultDialog";
+import type { FaultTitle } from "../../../domain/valueObjects/FaultTitle";
 
 import style from "./index.module.css";
-import UpdateRepairTaskStatusDialog from "../../components/updateRepairTaskStatusDialog";
 
 type User = {
   id: number;
@@ -32,34 +32,35 @@ type User = {
 const MainPage = () => {
   const [user, setUser] = useState<User | null>(null);
 
-  const [initialRepairRequestsList, setInitialRepairRequestsList] = useState<
+  const [initialRepairRequests, setInitialRepairRequests] = useState<
     InitialRepairRequest[]
   >([]);
 
-  const [assignedRepairTasksList, setAssignedRepairTasksList] = useState<
+  const [assignedRepairTasks, setAssignedRepairTasks] = useState<
     AssignedRepairTask[]
   >([]);
 
-  const [technicianTasksList, setTechnicianTasksList] = useState<
-    TechnicianAssignedRepairTask[]
-  >([]);
+  const [technicianAssignedRepairTasks, setTechnicianAssignedRepairTasks] =
+    useState<TechnicianAssignedRepairTask[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [isCreateRequestDialogOpen, setIsCreateRequestDialogOpen] =
     useState<boolean>(false);
 
-  const [isFaultTitleDialogOpen, setIsFaultTitleDialogOpen] =
+  const [isSelectFaultTitleDialogOpen, setIsSelectFaultTitleDialogOpen] =
     useState<boolean>(false);
 
-  const [selectedInitialRequestId, setSelectedInitialRequestId] =
+  const [selectedInitialRepairRequestId, setSelectedInitialRepairRequestId] =
     useState<number | null>(null);
 
-const [isUpdateTaskStatusDialogOpen, setIsUpdateTaskStatusDialogOpen] =
-  useState<boolean>(false);
+  const [isUpdateTaskStatusDialogOpen, setIsUpdateTaskStatusDialogOpen] =
+    useState<boolean>(false);
 
-const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
-  useState<number | null>(null);
+  const [
+    selectedTechnicianAssignedRepairTaskId,
+    setSelectedTechnicianAssignedRepairTaskId,
+  ] = useState<number | null>(null);
 
   const navigate = useNavigate();
 
@@ -67,7 +68,7 @@ const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
     if (role === "TECHNICIAN") {
       const result = await technicianAssignedRepairTasksService.getMyTasks();
 
-      setTechnicianTasksList(result.tasks);
+      setTechnicianAssignedRepairTasks(result.tasks);
 
       return;
     }
@@ -75,8 +76,8 @@ const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
     const initialRequests = await initialRepairRequestsService.getAll();
     const assignedTasks = await assignedRepairTasksService.getAll();
 
-    setInitialRepairRequestsList(initialRequests);
-    setAssignedRepairTasksList(assignedTasks);
+    setInitialRepairRequests(initialRequests);
+    setAssignedRepairTasks(assignedTasks);
   };
 
   useEffect(() => {
@@ -126,9 +127,9 @@ const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
     }
   };
 
-  const handleItemClick = (id: number) => {
-    setSelectedInitialRequestId(id);
-    setIsFaultTitleDialogOpen(true);
+  const handleInitialRepairRequestClick = (id: number) => {
+    setSelectedInitialRepairRequestId(id);
+    setIsSelectFaultTitleDialogOpen(true);
   };
 
   const handleSelectFaultTitle = async (faultTitle: FaultTitle) => {
@@ -136,19 +137,19 @@ const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
       return;
     }
 
-    if (selectedInitialRequestId === null) {
+    if (selectedInitialRepairRequestId === null) {
       console.log("No request selected");
       return;
     }
 
     try {
       await assignedRepairTasksService.create(
-        selectedInitialRequestId,
+        selectedInitialRepairRequestId,
         faultTitle
       );
 
-      setIsFaultTitleDialogOpen(false);
-      setSelectedInitialRequestId(null);
+      setIsSelectFaultTitleDialogOpen(false);
+      setSelectedInitialRepairRequestId(null);
 
       await loadPageData(user.role);
     } catch (error) {
@@ -156,54 +157,58 @@ const [selectedTechnicianTaskId, setSelectedTechnicianTaskId] =
     }
   };
 
-const handleTechnicianTaskClick = (id: number) => {
-  setSelectedTechnicianTaskId(id);
-  setIsUpdateTaskStatusDialogOpen(true);
-};
+  const handleTechnicianTaskClick = (id: number) => {
+    setSelectedTechnicianAssignedRepairTaskId(id);
+    setIsUpdateTaskStatusDialogOpen(true);
+  };
 
-const handleStartTechnicianTask = async () => {
-  if (!user) {
-    return;
-  }
+  const handleStartTechnicianTask = async () => {
+    if (!user) {
+      return;
+    }
 
-  if (selectedTechnicianTaskId === null) {
-    console.log("No technician task selected");
-    return;
-  }
+    if (selectedTechnicianAssignedRepairTaskId === null) {
+      console.log("No technician task selected");
+      return;
+    }
 
-  try {
-    await assignedRepairTasksService.startTask(selectedTechnicianTaskId);
+    try {
+      await assignedRepairTasksService.startTask(
+        selectedTechnicianAssignedRepairTaskId
+      );
 
-    setIsUpdateTaskStatusDialogOpen(false);
-    setSelectedTechnicianTaskId(null);
+      setIsUpdateTaskStatusDialogOpen(false);
+      setSelectedTechnicianAssignedRepairTaskId(null);
 
-    await loadPageData(user.role);
-  } catch (error) {
-    console.log("Failed to start repair task:", error);
-  }
-};
+      await loadPageData(user.role);
+    } catch (error) {
+      console.log("Failed to start repair task:", error);
+    }
+  };
 
-const handleFinishTechnicianTask = async () => {
-  if (!user) {
-    return;
-  }
+  const handleFinishTechnicianTask = async () => {
+    if (!user) {
+      return;
+    }
 
-  if (selectedTechnicianTaskId === null) {
-    console.log("No technician task selected");
-    return;
-  }
+    if (selectedTechnicianAssignedRepairTaskId === null) {
+      console.log("No technician task selected");
+      return;
+    }
 
-  try {
-    await assignedRepairTasksService.finishTask(selectedTechnicianTaskId);
+    try {
+      await assignedRepairTasksService.finishTask(
+        selectedTechnicianAssignedRepairTaskId
+      );
 
-    setIsUpdateTaskStatusDialogOpen(false);
-    setSelectedTechnicianTaskId(null);
+      setIsUpdateTaskStatusDialogOpen(false);
+      setSelectedTechnicianAssignedRepairTaskId(null);
 
-    await loadPageData(user.role);
-  } catch (error) {
-    console.log("Failed to finish repair task:", error);
-  }
-};
+      await loadPageData(user.role);
+    } catch (error) {
+      console.log("Failed to finish repair task:", error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -224,7 +229,7 @@ const handleFinishTechnicianTask = async () => {
           <UserHeader
             name={user.name}
             role={user.role}
-            handleSignOut={handleSignOut}
+            onSignOut={handleSignOut}
           />
         </section>
 
@@ -242,22 +247,22 @@ const handleFinishTechnicianTask = async () => {
         <div className={style.listsGrid}>
           {user.role === "TECHNICIAN" ? (
             <section className={`${style.listPanel} ${style.requestsPanel}`}>
-<TechnicianTasksList
-  tasks={technicianTasksList}
-  onItemClick={handleTechnicianTaskClick}
-/>
+              <TechnicianAssignedRepairTasksList
+                tasks={technicianAssignedRepairTasks}
+                onTaskClick={handleTechnicianTaskClick}
+              />
             </section>
           ) : (
             <>
               <section className={`${style.listPanel} ${style.requestsPanel}`}>
                 <InitialRepairRequestsList
-                  requests={initialRepairRequestsList}
-                  onItemClick={handleItemClick}
+                  requests={initialRepairRequests}
+                  onRequestClick={handleInitialRepairRequestClick}
                 />
               </section>
 
               <section className={`${style.listPanel} ${style.tasksPanel}`}>
-                <AssignedRepairTasksList tasks={assignedRepairTasksList} />
+                <AssignedRepairTasksList tasks={assignedRepairTasks} />
               </section>
             </>
           )}
@@ -271,24 +276,23 @@ const handleFinishTechnicianTask = async () => {
       />
 
       <SelectFaultTitleDialog
-        isOpen={isFaultTitleDialogOpen}
+        isOpen={isSelectFaultTitleDialogOpen}
         onClose={() => {
-          setIsFaultTitleDialogOpen(false);
-          setSelectedInitialRequestId(null);
+          setIsSelectFaultTitleDialogOpen(false);
+          setSelectedInitialRepairRequestId(null);
         }}
         onSelectFaultTitle={handleSelectFaultTitle}
       />
 
-    <UpdateRepairTaskStatusDialog
-  isOpen={isUpdateTaskStatusDialogOpen}
-  onClose={() => {
-    setIsUpdateTaskStatusDialogOpen(false);
-    setSelectedTechnicianTaskId(null);
-  }}
-  onStartTask={handleStartTechnicianTask}
-  onFinishTask={handleFinishTechnicianTask}
-/>
- 
+      <UpdateRepairTaskStatusDialog
+        isOpen={isUpdateTaskStatusDialogOpen}
+        onClose={() => {
+          setIsUpdateTaskStatusDialogOpen(false);
+          setSelectedTechnicianAssignedRepairTaskId(null);
+        }}
+        onStartTask={handleStartTechnicianTask}
+        onFinishTask={handleFinishTechnicianTask}
+      />
     </main>
   );
 };
