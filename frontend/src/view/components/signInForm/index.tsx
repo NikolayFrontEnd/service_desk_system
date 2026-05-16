@@ -23,10 +23,10 @@ const SignInForm = ({
 
       <Input
         id="email"
-        label="Email"
+        label="Почта"
         type="email"
         value={email}
-        placeholder="Enter your email"
+        placeholder="Введите ваш логин"
         onChange={(e) => {
           onEmailChange(e.target.value);
         }}
@@ -34,10 +34,10 @@ const SignInForm = ({
 
       <Input
         id="password"
-        label="Password"
+        label="Пароль"
         type="password"
         value={password}
-        placeholder="Enter your password"
+        placeholder="Введите ваш пароль"
         onChange={(e) => {
           onPasswordChange(e.target.value);
         }}
