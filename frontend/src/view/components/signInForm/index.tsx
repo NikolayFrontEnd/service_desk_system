@@ -47,7 +47,7 @@ const SignInForm = ({
         Вход
       </Button>
     </div>
-  );
-};
+  )
+}
 
 export default SignInForm;
