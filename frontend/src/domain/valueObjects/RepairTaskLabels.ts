@@ -77,6 +77,8 @@ export const faultTypeLabels: Record<string, string> = {
   MOUSE_TOUCHPAD_NOT_WORKING: "Не работает мышь или тачпад",
   EXTERNAL_DEVICE_NOT_DETECTED: "Не определяется внешнее устройство",
   WIFI_CONNECTION_ISSUE: "Проблема с подключением к Wi-Fi",
+  "LOCAL_NETWORK_ACCESS": "Нет доступа к сетевым папкам или внутренним ресурсам",
+  "OS_BOOT_FAILURE": "Сбой загрузки операционной системы",
 };
 
 export const getLabel = (
